@@ -19,7 +19,7 @@ public class Pivot {
 
     public static double power = 0, lastPower = power;
 
-    public static int intake = 29, max = 325, highBasket = 300, lowSpec = 120, highSpec = 200, idle = 300, zero = 0, highSpecDepo = 100;
+    public static int intake = 29, max = 325, highBasket = 300, lowSpec = 120, highSpec = 200, idle = 300, zero = 0, highSpecDepo = 100, shortIntake = 65;
     private int pos;
 
     public static double kP = 0.01, kI = 0, kD = 0, k = 0;
@@ -140,8 +140,9 @@ public class Pivot {
             case "High Spec Depo":
                 this.pos = highSpecDepo;
                 break;
-            
-
+            case "Intake":
+                this.pos = shortIntake;
+                break;
             default:
                 this.pos = idle;
                 break;
@@ -245,6 +246,11 @@ public class Pivot {
     public int getPos()
     {
         return leftPivot.getCurrentPosition();
+    }
+
+    public int getTargetPos()
+    {
+        return pos;
     }
 
 }
