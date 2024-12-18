@@ -35,6 +35,8 @@ public class DriveTestSS extends LinearOpMode {
         deviceConf.put("leftExtension",   "leftExtension");
         deviceConf.put("rightExtension",  "rightExtension");
         deviceConf.put("wrist",           "pivot");
+        deviceConf.put("smallWrist",      "smallPivot");
+        deviceConf.put("turn",            "turn");
         deviceConf.put("reset",           "reset");
 
         Claw claw = new Claw(hardwareMap);
@@ -59,6 +61,9 @@ public class DriveTestSS extends LinearOpMode {
         while (opModeIsActive()) {
             pivotReady = wristReady = extensionReady = swapReady = cycleReady = clawReady = true;
             drive.getXYZ(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
+
+            wrist.turnClaw(gamepad1.dpad_left, gamepad2.dpad_right);
+
             if (gamepad2.right_bumper && swapReady) {
                 sequence = "specimen";
                 incr = 0;
