@@ -22,9 +22,9 @@ public class Pivot {
     public static int intake = 29, max = 325, highBasket = 300, lowSpec = 120, highSpec = 200, idle = 300, zero = 0, highSpecDepo = 100, shortIntake = 65;
     private int pos;
 
-    public static double kP = 0.01, kI = 0, kD = 0, k = 0;
+    public static double kP = 0.02, kI = 0, kD = 0.0005, k = 0;
 
-    public static double extendedKp = 0.05, zeroKp = 0.005;
+    public static double extendedKp = 0.02, zeroKp = 0.005, slowKp = 0.02;
 
     PIDController pidController = new PIDController(kP, kI, kD);
 
@@ -111,18 +111,43 @@ public class Pivot {
         {
             case "Specimen Intake":
                 this.pos = intake;
+                pidController.setP(kP);
                 break;
 
             case "Sample Intake":
                 this.pos = intake;
+                pidController.setP(slowKp);
+                break;
+
+            case "Sample Extend":
+                this.pos = intake;
+                break;
+
+            case "Flip Down":
+                this.pos = intake;
+                break;
+
+            case "Flip Up":
+                this.pos = intake;
+                break;
+
+            case "Pullout":
+                this.pos = intake;
+                break;
+
+            case "Flip Out":
+                this.pos = highBasket;
+                pidController.setP(kP);
                 break;
 
             case "Low Basket":
                 this.pos = highBasket;
+                pidController.setP(kP);
                 break;
 
             case "High Basket":
                 this.pos = highBasket;
+                pidController.setP(kP);
                 break;
 
             case "Low Specimen":
@@ -131,10 +156,12 @@ public class Pivot {
 
             case "High Specimen":
                 this.pos = highSpec;
+                pidController.setP(kP);
                 break;
 
             case "Zero":
                 this.pos = zero;
+                pidController.setP(zeroKp);
                 break;
 
             case "High Spec Depo":
@@ -142,6 +169,7 @@ public class Pivot {
                 break;
             case "Intake":
                 this.pos = shortIntake;
+                pidController.setP(slowKp);
                 break;
             default:
                 this.pos = idle;
@@ -158,6 +186,26 @@ public class Pivot {
                 break;
 
             case "Sample Intake":
+                pidController.setP(slowKp);
+                break;
+
+            case "Sample Extend":
+                pidController.setP(slowKp);
+                break;
+
+            case "Flip Down":
+                pidController.setP(slowKp);
+                break;
+
+            case "Flip Up":
+                pidController.setP(slowKp);
+                break;
+
+            case "Pullout":
+                pidController.setP(slowKp);
+                break;
+
+            case "Flip Out":
                 pidController.setP(kP);
                 break;
 

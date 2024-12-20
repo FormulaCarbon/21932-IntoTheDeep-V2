@@ -18,7 +18,7 @@ public class Extension {
 
     public String posStr = "";
 
-    public static int specIntake = 1000, sampleIntake = 5, max = 2350, highBasket = 2350, lowBasket = 100, lowSpec = 5, highSpec = 1000, idle = 5;
+    public static int specIntake = 957, sampleIntake = 5, max = 2250, highBasket = 2250, lowBasket = 96, lowSpec = 5, highSpec = 957, idle = 5;
     private int pos;
 
     public static double kP = 0.01, kI = 0, kD = 0;
@@ -35,7 +35,7 @@ public class Extension {
 
         //reset = hwMap.get(RevTouchSensor.class, config.get("reset"));
 
-        rightExtension.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftExtension.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftExtension.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightExtension.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -57,6 +57,8 @@ public class Extension {
         else{
             applyPower(pidController.calculate(curLeft, pos));
         }
+
+
     }
 
     public void setPos(String pos)
@@ -69,6 +71,26 @@ public class Extension {
 
             case "Sample Intake":
                 this.pos = idle;
+                break;
+
+            case "Sample Extend":
+                this.pos = lowBasket;
+                break;
+
+            case "Flip Down":
+                this.pos = lowBasket;
+                break;
+
+            case "Flip Up":
+                this.pos = lowBasket;
+                break;
+
+            case "Pullout":
+                this.pos = idle;
+                break;
+
+            case "Flip Out":
+                this.pos = highBasket;
                 break;
 
             case "Low Basket":
@@ -130,5 +152,16 @@ public class Extension {
     {
         return pos - curLeft;
     }
-
+    public void setDirectPos(int pos)
+    {
+        this.pos = pos;
+    }
+    public int getCurPos()
+    {
+        return leftExtension.getCurrentPosition();
+    }
+    public int getTarPos()
+    {
+        return leftExtension.getTargetPosition();
+    }
 }

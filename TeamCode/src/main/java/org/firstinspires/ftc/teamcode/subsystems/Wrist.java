@@ -11,13 +11,11 @@ public class Wrist {
     Servo wrist;
     Servo smallWrist, turn;
 
-    public static double intake = 0.3, basket = 0.3, idle = 0.3, lowSpec = 0.5, highSpec = 0.45, realIntake = 0.75;
-    private double pos, smallPos;
-    private double turnPos = 0.5;
+    public static double intake = 0.45, basket = 0.45, idle = 0.45, lowSpec = 0.5, highSpec = 0.45, realIntake = 0.2;
+    private double pos, smallPos, turnPos;
 
-    public static double smallIntake = 0.3, smallBasket = 0.3, smallIdle = 0.3, smallLowSpec = 0.5, smallHighSpec = 0.45, smallRealIntake = 0.75;
-
-    public static double turnRes;
+    public static double smallIntake = 0.0, smallBasket = 0, smallIdle = 0.95, smallLowSpec = 0.5, smallHighSpec = 0.45, smallRealIntake = 0.88;
+    public static double turn0 = 0.075, turn1 = 0.287, turn2 = 0.6117, turn3 = 1;
     public String posStr = "";
 
     public Wrist(HardwareMap hwMap, HashMap<String, String> config)
@@ -26,7 +24,6 @@ public class Wrist {
         smallWrist = hwMap.servo.get(config.get("smallWrist"));
         turn = hwMap.servo.get(config.get("turn"));
 
-        wrist.setDirection(Servo.Direction.REVERSE);
     }
 
     public void update()
@@ -48,6 +45,31 @@ public class Wrist {
             case "Sample Intake":
                 this.pos = intake;
                 this.smallPos = smallIntake;
+                break;
+
+            case "Sample Extend":
+                this.pos = intake;
+                this.smallPos = smallIntake;
+                break;
+
+            case "Flip Down":
+                this.pos = realIntake;
+                this.smallPos = smallRealIntake;
+                break;
+
+            case "Flip Up":
+                this.pos = intake;
+                this.smallPos = smallIntake;
+                break;
+
+            case "Pullout":
+                this.pos = intake;
+                this.smallPos = smallIntake;
+                break;
+
+            case "Flip Out":
+                this.pos = realIntake;
+                this.smallPos = smallRealIntake;
                 break;
 
             case "Low Basket":
@@ -75,28 +97,43 @@ public class Wrist {
                 this.smallPos = smallRealIntake;
                 break;
 
-            default:
+            /*default:
                 this.pos = idle;
                 this.smallPos = idle;
-                break;
+                break;*/
         }
         posStr = pos;
     }
 
-    public void turnClaw(boolean leftFlag, boolean rightFlag)
+    public void turnClaw(int pos)
     {
-        if (leftFlag)
+        switch (pos)
         {
-            turnPos -= turnRes;
-        }
-        else if (rightFlag)
-        {
-            turnPos += turnRes;
+            case 0:
+                turnPos = turn0;
+                break;
+            case 1:
+                turnPos = turn1;
+                break;
+            case 2:
+                turnPos = turn2;
+                break;
+            case 3:
+                turnPos = turn3;
+                break;
         }
     }
 
     public String getTarget()
     {
         return posStr;
+    }
+    public double getPos()
+    {
+        return pos;
+    }
+    public double getSmallPos()
+    {
+        return smallPos;
     }
 }

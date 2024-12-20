@@ -62,8 +62,6 @@ public class DriveTestSS extends LinearOpMode {
             pivotReady = wristReady = extensionReady = swapReady = cycleReady = clawReady = true;
             drive.getXYZ(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
 
-            wrist.turnClaw(gamepad1.dpad_left, gamepad2.dpad_right);
-
             if (gamepad2.right_bumper && swapReady) {
                 sequence = "specimen";
                 incr = 0;
@@ -168,9 +166,9 @@ public class DriveTestSS extends LinearOpMode {
             //pivot.checkReset();
 
             drive.update();
-            pivot.update();
+            //pivot.update();
             extension.update();
-            wrist.update();
+            //wrist.update();
             claw.update(gamepad1.a);
 
             telemetry.addData("incr", incr);
@@ -181,13 +179,14 @@ public class DriveTestSS extends LinearOpMode {
             telemetry.addData("error", pivot.getError());
             telemetry.addData("r", pivot.getTicks());
             telemetry.addData("kp", pivot.getKP());
+            telemetry.addData("w", wrist.getSmallPos());
 
             telemetry.update();
 
 
         }
     }
-    int incr = 0, lastIncr = 0; boolean isPr = false; String target;
+    int incr = 1, lastIncr = 1; boolean isPr = false; String target;
 
     public String increment(boolean upFlag, boolean downFlag, String sequence) {
         if (downFlag && !isPr && incr > 0) {
@@ -199,7 +198,7 @@ public class DriveTestSS extends LinearOpMode {
         } else if (!downFlag && !upFlag) {
             isPr = false;
         }
-        if (incr > 3)
+        if (incr > 7)
         {
             incr = 0;
         }
@@ -222,10 +221,26 @@ public class DriveTestSS extends LinearOpMode {
                     return "Sample Intake";
 
                 case 2:
-                    return "Idle";
+                    return "Sample Extend";
 
                 case 3:
+                    return "Flip Down";
+
+                case 4:
+                    return "Flip Up";
+
+                case 5:
+                    return "Pullout";
+
+                case 6:
+                    return "Idle";
+
+                case 7:
                     return "High Basket";
+
+                case 8:
+                    return "Flip Out";
+
             }
         }
 
