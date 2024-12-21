@@ -34,6 +34,8 @@ public class Sample_RR extends LinearOpMode {
         deviceConf.put("leftExtension",   "leftExtension");
         deviceConf.put("rightExtension",  "rightExtension");
         deviceConf.put("wrist",           "pivot");
+        deviceConf.put("smallWrist",      "smallPivot");
+        deviceConf.put("turn",            "turn");
         deviceConf.put("reset",           "reset");
 
         Claw claw = new Claw(hardwareMap);
@@ -44,7 +46,7 @@ public class Sample_RR extends LinearOpMode {
 
         Wrist wrist = new Wrist(hardwareMap, deviceConf);
 
-        Pose2d startPos = new Pose2d(40.5, 63.5, Math.PI);
+        Pose2d startPos = new Pose2d(40.5, 66, Math.PI);
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
 
         TrajectoryActionBuilder bucket0 = drive.actionBuilder(startPos)
@@ -57,7 +59,7 @@ public class Sample_RR extends LinearOpMode {
 
         TrajectoryActionBuilder block1 = bucket0.endTrajectory().fresh()
                 .setTangent(5*Math.PI/4)
-                .splineToLinearHeading(new Pose2d(49.5, 37, 3*Math.PI/2), 3*Math.PI/2);
+                .splineToLinearHeading(new Pose2d(49.5, 41, 3*Math.PI/2), 3*Math.PI/2);
 
         TrajectoryActionBuilder bucket1 = block1.endTrajectory().fresh()
                 .setTangent(Math.PI/2)
@@ -66,7 +68,7 @@ public class Sample_RR extends LinearOpMode {
 
         TrajectoryActionBuilder block2 = bucket1.endTrajectory().fresh()
                 .setTangent(3*Math.PI/2)
-                .splineToLinearHeading(new Pose2d(61, 37, 3*Math.PI/2), 3*Math.PI/2);
+                .splineToLinearHeading(new Pose2d(61, 41, 3*Math.PI/2), 3*Math.PI/2);
 
         TrajectoryActionBuilder bucket2 = block2.endTrajectory().fresh()
                 .setTangent(Math.PI/2)
@@ -84,15 +86,25 @@ public class Sample_RR extends LinearOpMode {
                 .strafeTo(new Vector2d(50, 50));
 
         Thread update = new Thread(()->updateAll(pivot, extension, wrist));
-        claw.directSet(0.56);
+        claw.directSet(Claw.closed);
 
         // Wait for the start button to be pressed
+        wrist.setPos("Start");
+        wrist.turnClaw(0);
+        wrist.update();
+        update.start();
+        pivot.checkReset();
+        pivot.setPos("Start");
+        telemetry.addData("pos", pivot.getPos());
+        telemetry.addData("target", pivot.getPos() - tickChange);
+        telemetry.addData("error", pivot.getError());
+        telemetry.update();
+
         waitForStart();
 
-        wrist.setPos("High Basket");
-        wrist.update();
 
-        while (!pivot.checkReset() && opModeIsActive())
+
+        /*while (!pivot.checkReset() && opModeIsActive())
         {
             if (pivot.checkReset())
             {
@@ -100,7 +112,7 @@ public class Sample_RR extends LinearOpMode {
             }
             pivot.setDirectPos(pivot.getPos() - tickChange);
             telemetry.addData("pos", pivot.getPos());
-            telemetry.addData("target", pivot.getPos() - 10);
+            telemetry.addData("target", pivot.getPos() - tickChange);
             telemetry.addData("error", pivot.getError());
             telemetry.update();
             pivot.update();
@@ -108,10 +120,10 @@ public class Sample_RR extends LinearOpMode {
             {
                 pivot.applyPower(0);
             }
-        }
-        pivot.checkReset();
+        }*/
+        //pivot.checkReset();
         extension.setPos("Idle");
-        update.start();
+
 
         setBucket(bucket0.build(), pivot, extension, wrist, claw);
         sleep(500);
@@ -145,16 +157,16 @@ public class Sample_RR extends LinearOpMode {
         }
     }
     public void updateAll(Pivot pivot, Extension extension, Wrist wrist) {
-        while (opModeIsActive())
+        while (opModeInInit() || opModeIsActive())
         {
 
-            pivot.setKP(extension.getTarget());
+            //pivot.setKP(extension.getTarget());
             pivot.update();
 
-            extension.update();
-            wrist.update();
-            telemetry.addData("pos", pivot.getTargetPos());
-            telemetry.addData("change", pivot.getPos() - 10);
+            //extension.update();
+            //wrist.update();
+            telemetry.addData("pos", pivot.getPos());
+            telemetry.addData("target", pivot.getPos() - tickChange);
             telemetry.addData("error", pivot.getError());
             telemetry.update();
         }
@@ -172,7 +184,7 @@ public class Sample_RR extends LinearOpMode {
         sleep(1500);
         wrist.setPos("High Basket");
         sleep(1000);
-        claw.directSet(0.26);
+        claw.directSet(Claw.open);
         sleep(750);
         wrist.setPos("Intake");
 
@@ -186,17 +198,17 @@ public class Sample_RR extends LinearOpMode {
         Actions.runBlocking(trajectory);
 
         pivot.setPos("Intake");
-        pivot.setKP("Intake");
+        //pivot.setKP("Intake");
         sleep(1000);
         wrist.setPos("Intake");
         sleep(500);
         //extension.setPos("Intake");
-        claw.directSet(0.56);
+        claw.directSet(Claw.closed);
         sleep(500);
         wrist.setPos("Sample Intake");
         //extension.setPos("Idle");
         pivot.setPos("Idle");
-        pivot.setKP("Idle");
+        //pivot.setKP("Idle");
     }
 
 }

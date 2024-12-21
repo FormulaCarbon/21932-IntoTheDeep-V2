@@ -48,7 +48,7 @@ public class DriveTestSS extends LinearOpMode {
 
         Wrist wrist = new Wrist(hardwareMap, deviceConf);
 
-        boolean pivotReady, wristReady, extensionReady, swapReady, cycleReady, clawReady;
+        boolean pivotReady, wristReady, extensionReady, swapReady, cycleReady, clawReady, turnReady;
         boolean wristManual = false, extensionManual = false, pivotManual = false;
 
 
@@ -59,7 +59,7 @@ public class DriveTestSS extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            pivotReady = wristReady = extensionReady = swapReady = cycleReady = clawReady = true;
+            turnReady = pivotReady = wristReady = extensionReady = swapReady = cycleReady = clawReady = true;
             drive.getXYZ(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
 
             if (gamepad2.right_bumper && swapReady) {
@@ -109,11 +109,23 @@ public class DriveTestSS extends LinearOpMode {
                 extensionReady  = false;
             }
 
-            if (gamepad2.dpad_down && pivotReady) {
-                pivotManual = true;
-                pivot.checkReset();
-                pivotReady  = false;
+            if (gamepad2.dpad_up && turnReady) {
+                wrist.turnClaw(0);
+                turnReady = false;
             }
+            else if (gamepad2.dpad_left && turnReady) {
+                wrist.turnClaw(3);
+                turnReady = false;
+            }
+            else if (gamepad2.dpad_down && turnReady) {
+                wrist.turnClaw(2);
+                turnReady = false;
+            }
+            else if (gamepad2.dpad_right && turnReady) {
+                wrist.turnClaw(1);
+                turnReady = false;
+            }
+
             if (gamepad1.dpad_right && pivotReady) {
                 pivotManual = true;
                 pivot.setDirectPos(pivot.getPos()-tickChange);
@@ -166,9 +178,9 @@ public class DriveTestSS extends LinearOpMode {
             //pivot.checkReset();
 
             drive.update();
-            //pivot.update();
+            pivot.update();
             extension.update();
-            //wrist.update();
+            wrist.update();
             claw.update(gamepad1.a);
 
             telemetry.addData("incr", incr);
@@ -198,7 +210,7 @@ public class DriveTestSS extends LinearOpMode {
         } else if (!downFlag && !upFlag) {
             isPr = false;
         }
-        if (incr > 7)
+        if (incr > 8)
         {
             incr = 0;
         }

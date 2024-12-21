@@ -19,7 +19,7 @@ public class Pivot {
 
     public static double power = 0, lastPower = power;
 
-    public static int intake = 29, max = 325, highBasket = 300, lowSpec = 120, highSpec = 200, idle = 300, zero = 0, highSpecDepo = 100, shortIntake = 65;
+    public static int intake = 29, max = 325, highBasket = 325, lowSpec = 120, highSpec = 200, idle = 300, zero = 0, highSpecDepo = 100, shortIntake = 0, start = 200;
     private int pos;
 
     public static double kP = 0.02, kI = 0, kD = 0.0005, k = 0;
@@ -170,6 +170,10 @@ public class Pivot {
             case "Intake":
                 this.pos = shortIntake;
                 pidController.setP(slowKp);
+                break;
+            case "Start":
+                this.pos = start;
+                pidController.setP(kP);
                 break;
             default:
                 this.pos = idle;

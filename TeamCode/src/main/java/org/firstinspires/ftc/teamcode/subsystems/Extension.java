@@ -18,7 +18,7 @@ public class Extension {
 
     public String posStr = "";
 
-    public static int specIntake = 957, sampleIntake = 5, max = 2250, highBasket = 2250, lowBasket = 96, lowSpec = 5, highSpec = 957, idle = 5;
+    public static int specIntake = 957, sampleIntake = 5, max = 2600, highBasket = 2600, lowBasket = 1000, lowSpec = 10, highSpec = 957, idle = 10;
     private int pos;
 
     public static double kP = 0.01, kI = 0, kD = 0;
@@ -112,6 +112,7 @@ public class Extension {
             default:
                 this.pos = idle;
                 break;
+
         }
 
         posStr = pos;

@@ -11,11 +11,11 @@ public class Wrist {
     Servo wrist;
     Servo smallWrist, turn;
 
-    public static double intake = 0.45, basket = 0.45, idle = 0.45, lowSpec = 0.5, highSpec = 0.45, realIntake = 0.2;
+    public static double intake = 0.4, basket = 0.4, idle = 0.6, lowSpec = 0.5, highSpec = 0.45, realIntake = 0.37, start = 0.6;
     private double pos, smallPos, turnPos;
 
-    public static double smallIntake = 0.0, smallBasket = 0, smallIdle = 0.95, smallLowSpec = 0.5, smallHighSpec = 0.45, smallRealIntake = 0.88;
-    public static double turn0 = 0.075, turn1 = 0.287, turn2 = 0.6117, turn3 = 1;
+    public static double smallIntake = 0.0, smallBasket = 0.25, smallIdle = 0.95, smallLowSpec = 0.5, smallHighSpec = 0.45, smallRealIntake = 0.88, smallStart = 0;
+    public static double turn0 = 0.07, turn1 = 0.287, turn2 = 0.6117, turn3 = 0.9;
     public String posStr = "";
 
     public Wrist(HardwareMap hwMap, HashMap<String, String> config)
@@ -95,6 +95,11 @@ public class Wrist {
             case "Intake":
                 this.pos = realIntake;
                 this.smallPos = smallRealIntake;
+                break;
+
+            case "Start":
+                this.pos = start;
+                this.smallPos = smallStart;
                 break;
 
             /*default:
