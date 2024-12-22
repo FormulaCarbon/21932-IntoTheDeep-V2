@@ -18,7 +18,7 @@ public class Extension {
 
     public String posStr = "";
 
-    public static int specIntake = 957, sampleIntake = 5, max = 2600, highBasket = 2600, lowBasket = 1000, lowSpec = 10, highSpec = 957, idle = 10;
+    public static int specIntake = 957, sampleIntake = 5, max = 2600, highBasket = 2600, lowBasket = 750, lowSpec = 50, highSpec = 957, idle = 50;
     private int pos;
 
     public static double kP = 0.01, kI = 0, kD = 0;

@@ -5,13 +5,9 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Extension;
@@ -20,8 +16,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 
 import java.util.HashMap;
 
-@Autonomous(name = "Sample Cycle", group = "Sensor")
-public class Sample_RR extends LinearOpMode {
+@Autonomous(name = "Pivot Only", group = "Sensor")
+public class Pivot_Only extends LinearOpMode {
     public HashMap<String, String> deviceConf = new HashMap<String, String>();
 
     public static int tickChange = 100, pos = 150;
@@ -103,49 +99,8 @@ public class Sample_RR extends LinearOpMode {
         waitForStart();
 
 
-
-        /*while (!pivot.checkReset() && opModeIsActive())
-        {
-            if (pivot.checkReset())
-            {
-                pivot.applyPower(0);
-            }
-            pivot.setDirectPos(pivot.getPos() - tickChange);
-            telemetry.addData("pos", pivot.getPos());
-            telemetry.addData("target", pivot.getPos() - tickChange);
-            telemetry.addData("error", pivot.getError());
-            telemetry.update();
-            pivot.update();
-            if (pivot.checkReset())
-            {
-                pivot.applyPower(0);
-            }
-        }*/
-        //pivot.checkReset();
-        extension.setPos("Idle");
-
-
-        setBucket(bucket0.build(), pivot, extension, wrist, claw);
-        sleep(500);
-
-        getBlock(block1.build(),pivot,extension,wrist,claw);
-        setBucket(bucket1.build(), pivot, extension, wrist, claw);
-        sleep(500);
-
-        getBlock(block2.build(), pivot, extension, wrist, claw);
-        setBucket(bucket2.build(), pivot, extension, wrist, claw);
-        sleep(500);
-
-        //getBlock(block3.build(), pivot, extension, wrist, claw);
-        //setBucket(bucket3.build(), pivot, extension, wrist, claw);
-        //sleep(500);
-
-        extension.setPos("Idle");
-        sleep(500);
         pivot.setPos("Intake");
-        pivot.setKP("Idle");
-        wrist.setPos("High Basket");
-        Actions.runBlocking(park.build());
+        wrist.setPos("Sample Intake");
 
     }
     public void sleep(int t) {
