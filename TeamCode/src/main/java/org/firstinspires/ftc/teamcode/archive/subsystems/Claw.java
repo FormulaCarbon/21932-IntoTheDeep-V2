@@ -1,10 +1,8 @@
-package org.firstinspires.ftc.teamcode.subsystems;
+package org.firstinspires.ftc.teamcode.archive.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import java.util.HashMap;
 
 @Config
 public class Claw {
@@ -13,20 +11,19 @@ public class Claw {
     private boolean ispressed = false;
     public static double closed = 0.33, open = 0;
 
-    public Claw(HardwareMap hardwareMap, HashMap<String, String> config) {
-        claw = hardwareMap.servo.get(config.get("claw"));
+    public Claw(HardwareMap hardwareMap) {
+        claw = hardwareMap.servo.get("claw");
+
     }
 
     public void update(boolean gp) {
         if (gp && !ispressed) {
             if (claw.getPosition() == closed) {
                 claw.setPosition(open);
-            }
-            else {
+            } else {
                 claw.setPosition(closed);
             }
-        }
-        ispressed = gp;
+        } ispressed = gp;
     }
 
     public void directSet(double p) {

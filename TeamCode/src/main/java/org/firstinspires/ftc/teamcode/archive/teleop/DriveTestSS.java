@@ -1,14 +1,14 @@
-package org.firstinspires.ftc.teamcode.teleop;
+package org.firstinspires.ftc.teamcode.archive.teleop;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.subsystems.Claw;
-import org.firstinspires.ftc.teamcode.subsystems.Drive;
-import org.firstinspires.ftc.teamcode.subsystems.Extension;
-import org.firstinspires.ftc.teamcode.subsystems.Pivot;
-import org.firstinspires.ftc.teamcode.subsystems.Wrist;
+import org.firstinspires.ftc.teamcode.archive.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.archive.subsystems.Drive;
+import org.firstinspires.ftc.teamcode.archive.subsystems.Extension;
+import org.firstinspires.ftc.teamcode.archive.subsystems.Pivot;
+import org.firstinspires.ftc.teamcode.archive.subsystems.Wrist;
 
 import java.util.HashMap;
 
@@ -184,8 +184,8 @@ public class DriveTestSS extends LinearOpMode {
             claw.update(gamepad1.a);
 
             telemetry.addData("incr", incr);
-            telemetry.addData("lastincr", lastIncr);
-            telemetry.addData("target", target);
+            telemetry.addData("lastincr",2);
+            telemetry.addData("target", 2);
             telemetry.addData("wrist", wristManual);
             telemetry.addData("e", extensionManual);
             telemetry.addData("error", pivot.getError());

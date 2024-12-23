@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode.auton;
+package org.firstinspires.ftc.teamcode.archive.auton;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
@@ -10,19 +9,18 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
-import org.firstinspires.ftc.teamcode.subsystems.Claw;
-import org.firstinspires.ftc.teamcode.subsystems.Extension;
-import org.firstinspires.ftc.teamcode.subsystems.Pivot;
-import org.firstinspires.ftc.teamcode.subsystems.Wrist;
+import org.firstinspires.ftc.teamcode.archive.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.archive.subsystems.Extension;
+import org.firstinspires.ftc.teamcode.archive.subsystems.Pivot;
+import org.firstinspires.ftc.teamcode.archive.subsystems.Wrist;
 
 import java.util.HashMap;
 
-@Autonomous(name = "sad :(", group = "Sensor")
-@Config
-public class sad extends LinearOpMode {
+@Autonomous(name = "Sample Cycle", group = "Sensor")
+public class Sample_RR extends LinearOpMode {
     public HashMap<String, String> deviceConf = new HashMap<String, String>();
 
-    public static int tickChange = 100, pos = 70;
+    public static int tickChange = 100, pos = 150;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -46,9 +44,6 @@ public class sad extends LinearOpMode {
 
         Pose2d startPos = new Pose2d(40.5, 66, Math.PI);
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
-
-        TrajectoryActionBuilder p0 = drive.actionBuilder(startPos)
-                .lineToX(pos);
 
         TrajectoryActionBuilder bucket0 = drive.actionBuilder(startPos)
                 .setTangent(3*Math.PI/2)
@@ -95,7 +90,7 @@ public class sad extends LinearOpMode {
         wrist.update();
         update.start();
         //pivot.checkReset();
-        //pivot.setPos("Start");
+        pivot.setPos("Start");
         telemetry.addData("pos", pivot.getPos());
         telemetry.addData("target", pivot.getPos() - tickChange);
         telemetry.addData("error", pivot.getError());
@@ -104,9 +99,49 @@ public class sad extends LinearOpMode {
         waitForStart();
 
 
-        pivot.setDirectPos(-100);
-        sleep(1000);
-        Actions.runBlocking(p0.build());
+
+        /*while (!pivot.checkReset() && opModeIsActive())
+        {
+            if (pivot.checkReset())
+            {
+                pivot.applyPower(0);
+            }
+            pivot.setDirectPos(pivot.getPos() - tickChange);
+            telemetry.addData("pos", pivot.getPos());
+            telemetry.addData("target", pivot.getPos() - tickChange);
+            telemetry.addData("error", pivot.getError());
+            telemetry.update();
+            pivot.update();
+            if (pivot.checkReset())
+            {
+                pivot.applyPower(0);
+            }
+        }*/
+        //pivot.checkReset();
+        extension.setPos("Idle");
+
+
+        setBucket(bucket0.build(), pivot, extension, wrist, claw);
+        sleep(500);
+
+        getBlock(block1.build(),pivot,extension,wrist,claw);
+        setBucket(bucket1.build(), pivot, extension, wrist, claw);
+        sleep(500);
+
+        getBlock(block2.build(), pivot, extension, wrist, claw);
+        setBucket(bucket2.build(), pivot, extension, wrist, claw);
+        sleep(500);
+
+        //getBlock(block3.build(), pivot, extension, wrist, claw);
+        //setBucket(bucket3.build(), pivot, extension, wrist, claw);
+        //sleep(500);
+
+        extension.setPos("Idle");
+        sleep(500);
+        pivot.setPos("Intake");
+        pivot.setKP("Idle");
+        wrist.setPos("High Basket");
+        Actions.runBlocking(park.build());
 
     }
     public void sleep(int t) {

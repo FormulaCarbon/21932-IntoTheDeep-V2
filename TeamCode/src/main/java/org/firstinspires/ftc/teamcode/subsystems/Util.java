@@ -2,12 +2,31 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
 
+import java.util.HashMap;
+
 @Config
 public class Util {
-    public static double MAX_PIVOT_VELOCITY = 3000; // 4pi rad/sec
-    public static double MAX_PIVOT_ACCEL = 1500; // 2pi rad/sec^2
+    public static double MAX_PIVOT_VELOCITY = 3000;
+    public static double MAX_PIVOT_ACCEL = 1500;
 
     public static boolean inThresh(double val, double val2, double tol) {
-        return Math.abs(val - val2) > tol;
+        return Math.abs(val - val2) < tol;
+    }
+
+    public HashMap<String, String> deviceConf = new HashMap<String, String>();
+
+    public Util() {
+        deviceConf.put("frontLeft", "frontLeftMotor");
+        deviceConf.put("backLeft", "backLeftMotor");
+        deviceConf.put("frontRight", "frontRightMotor");
+        deviceConf.put("backRight", "backRightMotor");
+        deviceConf.put("leftPivot", "leftPivot");
+        deviceConf.put("rightPivot", "rightPivot");
+        deviceConf.put("leftExtension", "leftExtension");
+        deviceConf.put("rightExtension", "rightExtension");
+        deviceConf.put("wrist", "pivot");
+        deviceConf.put("smallWrist", "smallPivot");
+        deviceConf.put("turn", "turn");
+        deviceConf.put("reset", "reset");
     }
 }

@@ -5,140 +5,58 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.HashMap;
+
 @Config
 public class Wrist {
 
-    Servo wrist;
-    Servo smallWrist, turn;
+    private Servo rotation, forearm, bicep;
 
-    public static double intake = 0.4, basket = 0.4, idle = 0.6, lowSpec = 0.5, highSpec = 0.45, realIntake = 0.37, start = 1;
-    private double pos, smallPos, turnPos;
+    private double bicepPos, forearmPos, rotationPos;
 
-    public static double smallIntake = 0.0, smallBasket = 0.25, smallIdle = 0.95, smallLowSpec = 0.5, smallHighSpec = 0.45, smallRealIntake = 0.88, smallStart = 0;
-    public static double turn0 = 0.07, turn1 = 0.287, turn2 = 0.6117, turn3 = 0.9;
-    public String posStr = "";
+    public static HashMap<String, Double> bicepPositions, forearmPositions;
 
-    public Wrist(HardwareMap hwMap, HashMap<String, String> config)
-    {
-        wrist = hwMap.servo.get(config.get("wrist"));
-        smallWrist = hwMap.servo.get(config.get("smallWrist"));
-        turn = hwMap.servo.get(config.get("turn"));
+    public static double[] rotationPositions = new double[4];
+
+    public Wrist(HardwareMap hwMap, HashMap<String, String> config) {
+        bicep = hwMap.servo.get(config.get("bicep"));
+        forearm = hwMap.servo.get(config.get("forearm"));
+        rotation = hwMap.servo.get(config.get("rotation"));
+
+        bicepPositions.put("Intake", 0.37);
+        bicepPositions.put("Basket", 0.4);
+        bicepPositions.put("Idle",   0.4);
+        bicepPositions.put("Start",  1.0);
+
+        forearmPositions.put("Intake", 0.88);
+        forearmPositions.put("Basket", 0.25);
+        forearmPositions.put("Idle",   0.0);
+        forearmPositions.put("Start",  0.0);
+
+        rotationPositions[0] = 0.88;
+        rotationPositions[1] = 0.25;
+        rotationPositions[2] = 0.0;
+        rotationPositions[3] = 0.0;
 
     }
 
     public void update()
     {
-        wrist.setPosition(pos);
-        smallWrist.setPosition(smallPos);
-        turn.setPosition(turnPos);
+        bicep.setPosition(bicepPos);
+        forearm.setPosition(forearmPos);
+        rotation.setPosition(rotationPos);
     }
 
-    public void setPos(String pos)
+    public void setBicepPos(String pos)
     {
-        switch (pos)
-        {
-            case "Specimen Intake":
-                this.pos = intake;
-                this.smallPos = smallIntake;
-                break;
-
-            case "Sample Intake":
-                this.pos = intake;
-                this.smallPos = smallIntake;
-                break;
-
-            case "Sample Extend":
-                this.pos = intake;
-                this.smallPos = smallIntake;
-                break;
-
-            case "Flip Down":
-                this.pos = realIntake;
-                this.smallPos = smallRealIntake;
-                break;
-
-            case "Flip Up":
-                this.pos = intake;
-                this.smallPos = smallIntake;
-                break;
-
-            case "Pullout":
-                this.pos = intake;
-                this.smallPos = smallIntake;
-                break;
-
-            case "Flip Out":
-                this.pos = realIntake;
-                this.smallPos = smallRealIntake;
-                break;
-
-            case "Low Basket":
-                this.pos = basket;
-                this.smallPos = smallBasket;
-                break;
-
-            case "High Basket":
-                this.pos = basket;
-                this.smallPos = smallBasket;
-                break;
-
-            case "Low Specimen":
-                this.pos = lowSpec;
-                this.smallPos = smallLowSpec;
-                break;
-
-            case "High Specimen":
-                this.pos = highSpec;
-                this.smallPos = smallHighSpec;
-                break;
-
-            case "Intake":
-                this.pos = realIntake;
-                this.smallPos = smallRealIntake;
-                break;
-
-            case "Start":
-                this.pos = start;
-                this.smallPos = smallStart;
-                break;
-
-            /*default:
-                this.pos = idle;
-                this.smallPos = idle;
-                break;*/
-        }
-        posStr = pos;
+        bicepPos = bicepPositions.get(pos);
     }
-
-    public void turnClaw(int pos)
+    public void setForearmPos(String pos)
     {
-        switch (pos)
-        {
-            case 0:
-                turnPos = turn0;
-                break;
-            case 1:
-                turnPos = turn1;
-                break;
-            case 2:
-                turnPos = turn2;
-                break;
-            case 3:
-                turnPos = turn3;
-                break;
-        }
+        forearmPos = forearmPositions.get(pos);
+    }
+    public void setRotationPos(int pos)
+    {
+        rotationPos = rotationPositions[pos];
     }
 
-    public String getTarget()
-    {
-        return posStr;
-    }
-    public double getPos()
-    {
-        return pos;
-    }
-    public double getSmallPos()
-    {
-        return smallPos;
-    }
 }
