@@ -24,9 +24,10 @@ public class Util {
         deviceConf.put("rightPivot", "rightPivot");
         deviceConf.put("leftExtension", "leftExtension");
         deviceConf.put("rightExtension", "rightExtension");
-        deviceConf.put("wrist", "pivot");
-        deviceConf.put("smallWrist", "smallPivot");
-        deviceConf.put("turn", "turn");
+        deviceConf.put("bicep", "pivot");
+        deviceConf.put("forearm", "smallPivot");
+        deviceConf.put("rotation", "turn");
+        deviceConf.put("claw", "claw");
         deviceConf.put("reset", "reset");
     }
 }

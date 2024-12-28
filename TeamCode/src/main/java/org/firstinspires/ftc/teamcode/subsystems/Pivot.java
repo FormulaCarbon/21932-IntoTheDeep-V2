@@ -32,8 +32,8 @@ public class Pivot {
     ElapsedTime fullTimer = new ElapsedTime();
     ElapsedTime velTimer = new ElapsedTime();
 
-    public static HashMap<String, Integer> positions;
-    public static HashMap<String, Double> kPs;
+    public static HashMap<String, Integer> positions = new HashMap<String, Integer>();
+    public static HashMap<String, Double> kPs = new HashMap<String, Double>();
 
     double aVelocity, indexedPosition = 0;
 
@@ -55,9 +55,9 @@ public class Pivot {
 
         profile = new TrapezoidProfile(constraints, new TrapezoidProfile.State(0, 0));
 
-        positions.put("Down", 30);
-        positions.put("Basket", 280);
-        positions.put("Idle", 280);
+        positions.put("Down", 0);
+        positions.put("Basket", 300);
+        positions.put("Idle", 300);
         positions.put("Start", 200);
 
         kPs.put("Normal", kP);
@@ -104,6 +104,18 @@ public class Pivot {
 
     public void setkP(String kP) {
         this.kP = kPs.get(kP);
+    }
+
+    public int getTarget() {
+        return pos;
+    }
+
+    public int getCurrent() {
+        return leftPivot.getCurrentPosition();
+    }
+
+    public double getPower() {
+        return power;
     }
 
 }

@@ -15,14 +15,9 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 @Config
 public class IntoTheDeep extends LinearOpMode {
 
-    Util util = new Util();
-    Drive drive = new Drive(hardwareMap, util.deviceConf);
-    Pivot pivot = new Pivot(hardwareMap, util.deviceConf);
-    Extension extension = new Extension(hardwareMap, util.deviceConf);
-    Wrist wrist = new Wrist(hardwareMap, util.deviceConf);
-    Claw claw = new Claw(hardwareMap, util.deviceConf);
 
-    private int incr;
+
+    private int incr = 0;
     boolean incrUpdate = false;
 
     public static int maxSampleSteps = 8, maxSpecimenSteps = 8;
@@ -34,6 +29,12 @@ public class IntoTheDeep extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        Util util = new Util();
+        Drive drive = new Drive(hardwareMap, util.deviceConf);
+        Pivot pivot = new Pivot(hardwareMap, util.deviceConf);
+        Extension extension = new Extension(hardwareMap, util.deviceConf);
+        Wrist wrist = new Wrist(hardwareMap, util.deviceConf);
+        Claw claw = new Claw(hardwareMap, util.deviceConf);
 
         waitForStart();
 
@@ -44,7 +45,7 @@ public class IntoTheDeep extends LinearOpMode {
             drive.getXYZ(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
 
             increment(gamepad1.right_bumper, gamepad1.left_bumper, sequence);
-            setPositions(incr, sequence);
+            setPositions(incr, sequence, pivot, extension, wrist);
 
             if (gamepad1.x && wristReady) {
                 wristManual = true;
@@ -92,6 +93,9 @@ public class IntoTheDeep extends LinearOpMode {
             claw.update(gamepad1.a);
 
             telemetry.addData("incr", incr);
+            telemetry.addData("tar", pivot.getTarget());
+            telemetry.addData("cur", pivot.getCurrent());
+            telemetry.addData("pow", pivot.getPower());
             telemetry.update();
         }
     }
@@ -129,7 +133,7 @@ public class IntoTheDeep extends LinearOpMode {
         }
     }
 
-    public void setPositions(int pos, String sequence)  {
+    public void setPositions(int pos, String sequence, Pivot pivot, Extension extension, Wrist wrist)  {
         if (sequence.equals("Sample")) {
             switch (pos) {
                 case 0: // Idle

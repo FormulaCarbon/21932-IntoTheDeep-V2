@@ -18,7 +18,7 @@ public class Extension {
     PIDController pidController = new PIDController(kP, kI, kD);
     public static int PIDTol = 10, PIDThresh = 10;
 
-    public static HashMap<String, Integer> positions;
+    public static HashMap<String, Integer> positions = new HashMap<String, Integer>();
 
     public Extension(HardwareMap hwMap, HashMap<String, String> config)
     {
@@ -36,7 +36,7 @@ public class Extension {
 
         positions.put("Intake", 750);
         positions.put("Idle",   50);
-        positions.put("Basket", 2600);
+        positions.put("Basket", 2500);
     }
 
     public void update()
