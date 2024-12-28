@@ -17,7 +17,7 @@ public class IntoTheDeep extends LinearOpMode {
 
 
 
-    private int incr = 0;
+    private int incr = 1;
     boolean incrUpdate = false;
 
     public static int maxSampleSteps = 8, maxSpecimenSteps = 8;
