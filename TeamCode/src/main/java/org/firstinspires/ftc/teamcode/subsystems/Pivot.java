@@ -56,8 +56,8 @@ public class Pivot {
         profile = new TrapezoidProfile(constraints, new TrapezoidProfile.State(0, 0));
 
         positions.put("Down", 0);
-        positions.put("Basket", 300);
-        positions.put("Idle", 300);
+        positions.put("Basket", 315);
+        positions.put("Idle", 315);
         positions.put("Start", 200);
 
         kPs.put("Normal", kP);
