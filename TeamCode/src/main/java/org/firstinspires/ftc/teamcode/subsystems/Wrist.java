@@ -24,19 +24,19 @@ public class Wrist {
         rotation = hwMap.servo.get(config.get("rotation"));
 
         bicepPositions.put("Intake", 0.15);
-        bicepPositions.put("Basket", 0.3);
-        bicepPositions.put("Idle",   0.3);
+        bicepPositions.put("Basket", 0.25);
+        bicepPositions.put("Idle",   0.25);
         bicepPositions.put("Start",  0.9);
 
         forearmPositions.put("Intake", 1.0);
-        forearmPositions.put("Basket", 0.0);
-        forearmPositions.put("Idle",   0.0);
+        forearmPositions.put("Basket", 0.2);
+        forearmPositions.put("Idle",   0.5);
         forearmPositions.put("Start",  0.0);
 
-        rotationPositions[0] = 0.88;
-        rotationPositions[1] = 0.25;
-        rotationPositions[2] = 0.0;
-        rotationPositions[3] = 0.0;
+        rotationPositions[0] = 0.07;
+        rotationPositions[1] = 0.34;
+        rotationPositions[2] = 0.61;
+        rotationPositions[3] = 0.88;
 
     }
 

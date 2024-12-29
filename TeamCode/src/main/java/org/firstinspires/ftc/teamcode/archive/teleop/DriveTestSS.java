@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.archive.teleop;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -14,6 +15,7 @@ import java.util.HashMap;
 
 @TeleOp
 @Config
+@Disabled
 public class DriveTestSS extends LinearOpMode {
 
     public HashMap<String, String> deviceConf = new HashMap<String, String>();
