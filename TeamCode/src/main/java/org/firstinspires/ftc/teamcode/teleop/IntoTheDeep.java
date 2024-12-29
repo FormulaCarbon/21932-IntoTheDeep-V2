@@ -77,6 +77,23 @@ public class IntoTheDeep extends LinearOpMode {
                 turnReady = false;
             }
 
+            if (gamepad1.dpad_up && turnReady) {
+                wrist.setRotationPos(0);
+                turnReady = false;
+            }
+            else if (gamepad1.dpad_left && turnReady) {
+                wrist.setRotationPos(3);
+                turnReady = false;
+            }
+            else if (gamepad1.dpad_down && turnReady) {
+                wrist.setRotationPos(2);
+                turnReady = false;
+            }
+            else if (gamepad1.dpad_right && turnReady) {
+                wrist.setRotationPos(1);
+                turnReady = false;
+            }
+
             if (gamepad2.right_bumper || gamepad2.left_bumper || gamepad1.right_bumper || gamepad1.left_bumper)
             {
                 wristManual = false;
