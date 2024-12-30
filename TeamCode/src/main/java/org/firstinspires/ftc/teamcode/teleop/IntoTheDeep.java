@@ -47,7 +47,7 @@ public class IntoTheDeep extends LinearOpMode {
             increment(gamepad1.right_bumper, gamepad1.left_bumper, sequence);
             setPositions(incr, sequence, pivot, extension, wrist);
 
-            if (gamepad1.x && wristReady) {
+            /*if (gamepad1.x && wristReady) {
                 wristManual = true;
                 wrist.setBicepPos("Intake");
                 wrist.setForearmPos("Intake");
@@ -58,7 +58,7 @@ public class IntoTheDeep extends LinearOpMode {
                 wrist.setBicepPos("Basket");
                 wrist.setForearmPos("Basket");
                 wristReady = false;
-            }
+            }*/
 
             if (gamepad2.dpad_up && turnReady) {
                 wrist.setRotationPos(0);
@@ -92,6 +92,14 @@ public class IntoTheDeep extends LinearOpMode {
             else if (gamepad1.dpad_right && turnReady) {
                 wrist.setRotationPos(1);
                 turnReady = false;
+            }
+
+            if (gamepad1.b && pivotReady && extensionReady && wristReady) {
+                incr = -1;
+            }
+
+            if (gamepad1.y && extensionReady) {
+                incr = -2;
             }
 
             if (gamepad2.right_bumper || gamepad2.left_bumper || gamepad1.right_bumper || gamepad1.left_bumper)
@@ -217,6 +225,15 @@ public class IntoTheDeep extends LinearOpMode {
                     extension.setPos("Basket");
                     wrist.setBicepPos("Intake");
                     wrist.setForearmPos("Intake");
+                    break;
+                case -1: // Hang
+                    wrist.setBicepPos("Intake");
+                    wrist.setForearmPos("Intake");
+                    pivot.setPos("Hang");
+                    extension.setPos("Idle");
+                    break;
+                case -2: // Hang Extend
+                    extension.setPos("Hang");
                     break;
             }
         }

@@ -59,6 +59,7 @@ public class Pivot {
         positions.put("Basket", 310);
         positions.put("Idle", 310);
         positions.put("Start", 200);
+        positions.put("Hang", 330);
 
         kPs.put("Normal", kP);
         kPs.put("Extended", extendedKp);
