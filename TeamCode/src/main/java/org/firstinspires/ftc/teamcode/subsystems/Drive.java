@@ -14,7 +14,7 @@ public class Drive {
 
     private double x, y, rx, d;
 
-    public static double curveFactor = 3, maxLinear = 0.8, maxRot = 0.5;
+    public static double curveFactor = 5, maxLinear = 0.8, maxRot = 0.5;
 
     public static double flMult = 1, blMult = 0.9, frMult = 1, brMult = 0.9;
     public Drive(HardwareMap hwMap, HashMap<String, String> config) {
