@@ -25,12 +25,12 @@ public class Wrist {
 
         bicepPositions.put("Intake", 0.15);
         bicepPositions.put("Basket", 0.25);
-        bicepPositions.put("Idle",   0.15);
+        bicepPositions.put("Idle",   0.25);
         bicepPositions.put("Start",  0.9);
 
         forearmPositions.put("Intake", 1.0);
         forearmPositions.put("Basket", 0.3);
-        forearmPositions.put("Idle",   0.6);
+        forearmPositions.put("Idle",   0.5);
         forearmPositions.put("Start",  0.0);
 
         rotationPositions[0] = 0.07;
