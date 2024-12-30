@@ -30,7 +30,7 @@ public class Wrist {
 
         forearmPositions.put("Intake", 1.0);
         forearmPositions.put("Basket", 0.3);
-        forearmPositions.put("Idle",   0.8);
+        forearmPositions.put("Idle",   0.6);
         forearmPositions.put("Start",  0.0);
 
         rotationPositions[0] = 0.07;
