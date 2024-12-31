@@ -38,6 +38,7 @@ public class Extension {
         positions.put("Idle",   50);
         positions.put("Basket", 2500);
         positions.put("Hang", 1000);
+        positions.put("Retract", 600);
     }
 
     public void update()

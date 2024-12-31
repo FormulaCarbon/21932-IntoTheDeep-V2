@@ -102,6 +102,10 @@ public class IntoTheDeep extends LinearOpMode {
                 incr = -2;
             }
 
+            if (gamepad1.x && extensionReady) {
+                incr = -3;
+            }
+
             if (gamepad2.right_bumper || gamepad2.left_bumper || gamepad1.right_bumper || gamepad1.left_bumper)
             {
                 wristManual = false;
@@ -226,7 +230,7 @@ public class IntoTheDeep extends LinearOpMode {
                     wrist.setBicepPos("Intake");
                     wrist.setForearmPos("Intake");
                     break;
-                case -1: // Hang
+                case -1: // Hang Pivot Position
                     wrist.setBicepPos("Intake");
                     wrist.setForearmPos("Intake");
                     pivot.setPos("Hang");
@@ -234,6 +238,9 @@ public class IntoTheDeep extends LinearOpMode {
                     break;
                 case -2: // Hang Extend
                     extension.setPos("Hang");
+                    break;
+                case -3: // Hang Retract
+                    extension.setPos("Retract");
                     break;
             }
         }
