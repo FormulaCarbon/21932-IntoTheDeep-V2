@@ -120,4 +120,8 @@ public class Pivot {
         return power;
     }
 
+    public double getError() {
+        return pos - leftPivot.getCurrentPosition();
+    }
+
 }
