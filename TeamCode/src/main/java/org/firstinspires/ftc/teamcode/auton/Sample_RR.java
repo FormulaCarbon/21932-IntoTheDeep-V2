@@ -12,35 +12,28 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Extension;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
+import org.firstinspires.ftc.teamcode.subsystems.Util;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 
 import java.util.HashMap;
 
 @Autonomous(name = "Sample Cycle", group = "Sensor")
 public class Sample_RR extends LinearOpMode {
-    public HashMap<String, String> deviceConf = new HashMap<String, String>();
 
     public static int tickChange = 100, pos = 150;
 
     @Override
     public void runOpMode() throws InterruptedException {
         // Hardware Map HashMap
-        deviceConf.put("leftPivot",       "leftPivot");
-        deviceConf.put("rightPivot",      "rightPivot");
-        deviceConf.put("leftExtension",   "leftExtension");
-        deviceConf.put("rightExtension",  "rightExtension");
-        deviceConf.put("wrist",           "pivot");
-        deviceConf.put("smallWrist",      "smallPivot");
-        deviceConf.put("turn",            "turn");
-        deviceConf.put("reset",           "reset");
+        Util util = new Util();
 
-        Claw claw = new Claw(hardwareMap, deviceConf);
+        Claw claw = new Claw(hardwareMap, util.deviceConf);
 
-        Pivot pivot = new Pivot(hardwareMap, deviceConf);
+        Pivot pivot = new Pivot(hardwareMap, util.deviceConf);
 
-        Extension extension = new Extension(hardwareMap, deviceConf);
+        Extension extension = new Extension(hardwareMap, util.deviceConf);
 
-        Wrist wrist = new Wrist(hardwareMap, deviceConf);
+        Wrist wrist = new Wrist(hardwareMap, util.deviceConf);
 
         Pose2d startPos = new Pose2d(40.5, 66, Math.PI);
         MecanumDrive drive = new MecanumDrive(hardwareMap, startPos);
@@ -55,7 +48,7 @@ public class Sample_RR extends LinearOpMode {
 
         TrajectoryActionBuilder block1 = bucket0.endTrajectory().fresh()
                 .setTangent(5*Math.PI/4)
-                .splineToLinearHeading(new Pose2d(49.5, 41, 3*Math.PI/2), 3*Math.PI/2);
+                .splineToLinearHeading(new Pose2d(50.5, 42, 3*Math.PI/2), 3*Math.PI/2);
 
         TrajectoryActionBuilder bucket1 = block1.endTrajectory().fresh()
                 .setTangent(Math.PI/2)
@@ -64,7 +57,7 @@ public class Sample_RR extends LinearOpMode {
 
         TrajectoryActionBuilder block2 = bucket1.endTrajectory().fresh()
                 .setTangent(3*Math.PI/2)
-                .splineToLinearHeading(new Pose2d(61, 41, 3*Math.PI/2), 3*Math.PI/2);
+                .splineToLinearHeading(new Pose2d(61, 42, 3*Math.PI/2), 3*Math.PI/2);
 
         TrajectoryActionBuilder bucket2 = block2.endTrajectory().fresh()
                 .setTangent(Math.PI/2)
@@ -82,24 +75,23 @@ public class Sample_RR extends LinearOpMode {
                 .strafeTo(new Vector2d(50, 50));
 
         Thread update = new Thread(()->updateAll(pivot, extension, wrist));
-        claw.directSet(Claw.closed);
 
-        // Wait for the start button to be pressed
+
+        // go to start pos
+        claw.directSet(Claw.closed);
         wrist.setBicepPos("Start");
         wrist.setForearmPos("Start");
         wrist.setRotationPos(0);
-
-        wrist.update();
-
-        update.start();
-
         pivot.setPos("Start");
+        pivot.setkP("Normal");
+        update.start();
 
         telemetry.addData("pos", pivot.getCurrent());
         telemetry.addData("target", pivot.getTarget());
         telemetry.addData("error", pivot.getError());
         telemetry.update();
 
+        // Wait for the start button to be pressed
         waitForStart();
 
         extension.setPos("Idle");
@@ -116,17 +108,12 @@ public class Sample_RR extends LinearOpMode {
         setBucket(bucket2.build(), pivot, extension, wrist, claw);
         sleep(500);
 
-        //getBlock(block3.build(), pivot, extension, wrist, claw);
-        //setBucket(bucket3.build(), pivot, extension, wrist, claw);
-        //sleep(500);
+        pivot.setPos("Down");
 
-        extension.setPos("Idle");
-        sleep(500);
-        pivot.setPos("Intake");
 
-        wrist.setBicepPos("High Basket");
-        wrist.setForearmPos("High Basket");
         Actions.runBlocking(park.build());
+
+        sleep(2000);
 
     }
     public void sleep(int t) {
@@ -141,11 +128,11 @@ public class Sample_RR extends LinearOpMode {
         while (opModeInInit() || opModeIsActive())
         {
 
-            //pivot.setKP(extension.getTarget());
+
             pivot.update();
 
-            //extension.update();
-            //wrist.update();
+            extension.update();
+            wrist.update();
             telemetry.addData("pos", pivot.getCurrent());
             telemetry.addData("target", pivot.getTarget());
             telemetry.addData("error", pivot.getError());
@@ -154,44 +141,37 @@ public class Sample_RR extends LinearOpMode {
     }
 
     public void setBucket(Action trajectory , Pivot pivot, Extension extension, Wrist wrist, Claw claw) {
-        pivot.setPos("High Basket");
-
-        wrist.setBicepPos("Intake");
-        wrist.setForearmPos("Intake");
+        pivot.setPos("Basket");
+        wrist.setPos("Intake");
+        //pivot.setkP("Extended");
+        sleep(1000);
+        extension.setPos("Basket");
 
         Actions.runBlocking(trajectory);
-
-        extension.setPos("High Basket");
-        sleep(1500);
-        wrist.setBicepPos("High Basket");
-        wrist.setForearmPos("High Basket");
+        wrist.setPos("Basket");
         sleep(1000);
         claw.directSet(Claw.open);
-        sleep(750);
-        wrist.setBicepPos("Intake");
-        wrist.setForearmPos("Intake");
+        sleep(500);
+        wrist.setPos("Auton Idle");
+        sleep(500);
+        extension.setPos("Idle");
+        sleep(1000);
+        pivot.setkP("Normal");
+        pivot.setPos("Down");
     }
 
     public void getBlock(Action trajectory , Pivot pivot, Extension extension, Wrist wrist, Claw claw) {
-        extension.setPos("Idle");
-        sleep(1500);
-        pivot.setPos("Idle");
-        Actions.runBlocking(trajectory);
+        pivot.setPos("Down");
 
-        pivot.setPos("Intake");
-        //pivot.setKP("Intake");
+
+        Actions.runBlocking(trajectory);
+        wrist.setPos("Intake");
         sleep(1000);
-        wrist.setBicepPos("Intake");
-        wrist.setForearmPos("Intake");
-        sleep(500);
-        //extension.setPos("Intake");
         claw.directSet(Claw.closed);
-        sleep(500);
-        wrist.setBicepPos("Idle");
-        wrist.setForearmPos("Idle");
-        //extension.setPos("Idle");
-        pivot.setPos("Idle");
-        //pivot.setKP("Idle");
+        sleep(1000);
+        wrist.setPos("Idle");
+        pivot.setPos("Basket");
+
     }
 
 }

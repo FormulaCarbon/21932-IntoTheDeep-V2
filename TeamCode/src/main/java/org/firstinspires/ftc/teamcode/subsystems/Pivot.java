@@ -23,7 +23,8 @@ public class Pivot {
     private int curLeft = 0, lAngle = curLeft;
     private int lta = 0;
 
-    public static double kP = 0.02, kI = 0, kD = 0.0005, k = 0, extendedKp = 0.02, zeroKp = 0.005, slowKp = 0.02;
+    public static double kP = 0.02, kI = 0, kD = 0.0005, k = 0, extendedKp = 0.03, zeroKp = 0.005, slowKp = 0.02;
+    
     PIDController pidController = new PIDController(kP, kI, kD);
 
     TrapezoidProfile profile;
@@ -105,7 +106,7 @@ public class Pivot {
     }
 
     public void setkP(String kP) {
-        this.kP = kPs.get(kP);
+        pidController.setP(kPs.get(kP));
     }
 
     public int getTarget() {

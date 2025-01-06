@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.HashMap;
 
-@Config
+
 public class Drive {
 
     private DcMotor frontLeft, backLeft, frontRight, backRight;

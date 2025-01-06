@@ -38,6 +38,8 @@ public class IntoTheDeep extends LinearOpMode {
 
         waitForStart();
 
+        wrist.setRotationPos(0);
+
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {

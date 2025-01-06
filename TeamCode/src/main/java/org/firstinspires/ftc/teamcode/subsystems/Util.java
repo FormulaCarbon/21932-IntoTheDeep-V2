@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 @Config
 public class Util {
-    public static double MAX_PIVOT_VELOCITY = 3000;
-    public static double MAX_PIVOT_ACCEL = 1500;
+    public static double MAX_PIVOT_VELOCITY = 2000;
+    public static double MAX_PIVOT_ACCEL = 750;
 
     public static boolean inThresh(double val, double val2, double tol) {
         return Math.abs(val - val2) < tol;

@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.util.HashMap;
 
-@Config
+
 public class Pivot {
 
     private DcMotorEx leftPivot, rightPivot;

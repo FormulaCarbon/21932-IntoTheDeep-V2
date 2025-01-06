@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.HashMap;
 
-@Config
+
 public class Extension {
 
     private DcMotor leftExtension, rightExtension;
