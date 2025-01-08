@@ -30,7 +30,7 @@ public class Wrist {
         bicepPositions.put("Auton Idle",  0.2);
 
         forearmPositions.put("Intake",      1.0);
-        forearmPositions.put("Basket",      0.3);
+        forearmPositions.put("Basket",      0.2);
         forearmPositions.put("Idle",        0.5);
         forearmPositions.put("Start",       0.05);
         forearmPositions.put("Auton Idle",  0.5);
