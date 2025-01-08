@@ -200,23 +200,23 @@ public class IntoTheDeep extends LinearOpMode {
                     pivot.setPos("Down");
                     pivot.setkP("Extended");
                     extension.setPos("Intake");
-                    wrist.setBicepPos("Idle");
-                    wrist.setForearmPos("Idle");
+                    wrist.setBicepPos("Basket");
+                    wrist.setForearmPos("Basket");
                     break;
                 case 5: // Pullout
                     pivot.setPos("Down");
                     pivot.setkP("Normal");
                     extension.setPos("Idle");
-                    wrist.setBicepPos("Idle");
-                    wrist.setForearmPos("Idle");
+                    wrist.setBicepPos("Basket");
+                    wrist.setForearmPos("Basket");
                     wrist.setRotationPos(0);
                     break;
                 case 6: // Idle
                     pivot.setPos("Idle");
                     pivot.setkP("Normal");
                     extension.setPos("Idle");
-                    wrist.setBicepPos("Idle");
-                    wrist.setForearmPos("Idle");
+                    wrist.setBicepPos("Basket");
+                    wrist.setForearmPos("Basket");
                     break;
                 case 7: // High Basket
                     pivot.setPos("Basket");
