@@ -35,10 +35,10 @@ public class Wrist {
         forearmPositions.put("Start",       0.05);
         forearmPositions.put("Auton Idle",  0.5);
 
-        rotationPositions[0] = 0.07;
-        rotationPositions[1] = 0.34;
-        rotationPositions[2] = 0.61;
-        rotationPositions[3] = 0.88;
+        rotationPositions[0] = 0.39;
+        rotationPositions[1] = 0.66;
+        rotationPositions[2] = 0.94;
+        rotationPositions[3] = 0.12;
 
     }
 

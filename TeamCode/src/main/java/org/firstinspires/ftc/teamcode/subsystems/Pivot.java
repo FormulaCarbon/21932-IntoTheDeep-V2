@@ -28,7 +28,7 @@ public class Pivot {
     PIDController pidController = new PIDController(kP, kI, kD);
 
     TrapezoidProfile profile;
-    TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(org.firstinspires.ftc.teamcode.archive.subsystems.Util.MAX_PIVOT_VELOCITY, Util.MAX_PIVOT_ACCEL);
+    TrapezoidProfile.Constraints constraints = new TrapezoidProfile.Constraints(Util.MAX_PIVOT_VELOCITY, Util.MAX_PIVOT_ACCEL);
 
     ElapsedTime fullTimer = new ElapsedTime();
     ElapsedTime velTimer = new ElapsedTime();
