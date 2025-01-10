@@ -16,7 +16,7 @@ public class Drive {
 
     public static double curveFactor = 1.5, maxLinear = 0.7, maxRot = 0.4;
 
-    public static double flMult = 1, blMult = 0.9, frMult = 1, brMult = 0.9;
+    public static double flMult = 1, blMult = 1, frMult = 1, brMult = 1;
     public Drive(HardwareMap hwMap, HashMap<String, String> config) {
         frontLeft = hwMap.dcMotor.get(config.get("frontLeft"));
         backLeft = hwMap.dcMotor.get(config.get("backLeft"));
