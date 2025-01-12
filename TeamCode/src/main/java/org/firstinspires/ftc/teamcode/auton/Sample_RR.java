@@ -130,10 +130,11 @@ public class Sample_RR extends LinearOpMode {
         {
 
 
-            pivot.update();
+            //pivot.update();
 
-            extension.update();
-            wrist.update();
+            //extension.update();
+            //
+            // wrist.update();
             telemetry.addData("pos", pivot.getCurrent());
             telemetry.addData("target", pivot.getTarget());
             telemetry.addData("error", pivot.getError());
