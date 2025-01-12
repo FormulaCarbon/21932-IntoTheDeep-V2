@@ -29,5 +29,6 @@ public class Util {
         deviceConf.put("rotation", "turn");
         deviceConf.put("claw", "claw");
         deviceConf.put("reset", "reset");
+        deviceConf.put("pinpoint", "pinpoint");
     }
 }
