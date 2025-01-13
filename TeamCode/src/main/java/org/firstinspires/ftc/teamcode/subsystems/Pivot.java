@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
 import com.qualcomm.hardware.rev.RevTouchSensor;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Util;
 
 import java.util.HashMap;
 
+@Config
 public class Pivot {
     private DcMotorEx leftPivot, rightPivot;
     RevTouchSensor reset;

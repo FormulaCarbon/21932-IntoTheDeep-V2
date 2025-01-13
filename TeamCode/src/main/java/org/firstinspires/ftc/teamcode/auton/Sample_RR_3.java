@@ -20,8 +20,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 
 import java.util.HashMap;
 @Config
-@Autonomous(name = "Sample Cycle (4)", group = "Sensor")
-public class Sample_RR extends LinearOpMode {
+@Autonomous(name = "Sample Cycle (3)", group = "Sensor")
+public class Sample_RR_3 extends LinearOpMode {
 
     public static int tickChange = 100, pos = 150;
     public static double basketX = 60, basketY = 60;
