@@ -127,4 +127,8 @@ public class Pivot {
         return pos - leftPivot.getCurrentPosition();
     }
 
+    public double getVelocity() {
+        return leftPivot.getVelocity();
+    }
+
 }

@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.PinpointDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Extension;
@@ -26,6 +30,11 @@ public class IntoTheDeep extends LinearOpMode {
     boolean wristManual = false, extensionManual = false, pivotManual = false;
 
     String sequence = "Sample";
+
+    FtcDashboard dash = FtcDashboard.getInstance();
+    TelemetryPacket packet = new TelemetryPacket();
+
+    MultipleTelemetry mt = new MultipleTelemetry(telemetry, dash.getTelemetry());
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -123,10 +132,12 @@ public class IntoTheDeep extends LinearOpMode {
             wrist.update();
             claw.update(gamepad1.a);
 
+
             telemetry.addData("incr", incr);
             telemetry.addData("tar", pivot.getTarget());
             telemetry.addData("cur", pivot.getCurrent());
             telemetry.addData("pow", pivot.getPower());
+
             telemetry.update();
         }
     }

@@ -111,8 +111,40 @@ public class Sample_RR extends LinearOpMode {
         getBlock(block2.build(), pivot, extension, wrist, claw);
         setBucket(bucket2.build(), pivot, extension, wrist, claw);
 
-        getBlock(block3.build(), pivot, extension, wrist, claw);
-        setBucket(bucket3.build(), pivot, extension, wrist, claw);
+
+        extension.setPos("Idle");
+
+
+        Actions.runBlocking(block3.build());
+        pivot.setkP("Normal");
+        pivot.setPos("Down");
+
+        wrist.setRotationPos(1);
+
+        wrist.setPos("Intake");
+        sleep(1500);
+        claw.directSet(Claw.closed);
+        sleep(500);
+
+        pivot.setPos("Basket");
+
+
+
+        pivot.setPos("Basket");
+        //pivot.setkP("Extended");
+        sleep(500);
+        wrist.setPos("Auton Idle");
+        wrist.setRotationPos(0);
+        extension.setPos("Basket");
+
+        Actions.runBlocking(bucket3.build());
+        wrist.setPos("Basket");
+        sleep(500);
+        claw.directSet(Claw.open);
+        sleep(500);
+        wrist.setPos("Auton Idle");
+        sleep(500);
+
 
         extension.setPos("Idle");
         Actions.runBlocking(park.build());
@@ -139,7 +171,6 @@ public class Sample_RR extends LinearOpMode {
             pivot.update();
 
             extension.update();
-            //
             wrist.update();
             telemetry.addData("pos", pivot.getCurrent());
             telemetry.addData("target", pivot.getTarget());
