@@ -185,10 +185,10 @@ public class IntoTheDeep extends LinearOpMode {
                     wrist.setForearmPos("Idle");
                     break;
                 case 1: // Sample Intake: Down, Unextended
-                    if (extension.getCurrentPos() < 100) {
-                        pivot.setPos("Down");
-                        pivot.setkP("Normal");
-                    }
+                    //if (extension.getCurrentPos() < 100) {
+                    pivot.setPos("Down");
+                    pivot.setkP("Normal");
+                    //}
                     extension.setPos("Idle");
                     wrist.setBicepPos("Idle");
                     wrist.setForearmPos("Idle");
@@ -233,9 +233,9 @@ public class IntoTheDeep extends LinearOpMode {
                 case 7: // High Basket
                     pivot.setPos("Basket");
                     pivot.setkP("Extended");
-                    if (pivot.getCurrent() > 250) {
-                        extension.setPos("Basket");
-                    }
+                    //if (pivot.getCurrent() > 315) {
+                    extension.setPos("Basket");
+                    //}
                     wrist.setBicepPos("Basket");
                     wrist.setForearmPos("Basket");
                     break;
