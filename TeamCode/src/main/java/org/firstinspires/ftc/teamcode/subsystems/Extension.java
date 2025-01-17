@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
 @Config
 public class Extension {
 
-    private DcMotor leftExtension, rightExtension;
+    private DcMotorEx leftExtension, rightExtension;
 
     private int pos;
     private int curLeft;
@@ -24,8 +25,8 @@ public class Extension {
 
     public Extension(HardwareMap hwMap, HashMap<String, String> config)
     {
-        leftExtension = hwMap.dcMotor.get(config.get("leftExtension"));
-        rightExtension = hwMap.dcMotor.get(config.get("rightExtension"));
+        leftExtension = hwMap.get(DcMotorEx.class, config.get("leftExtension"));
+        rightExtension = hwMap.get(DcMotorEx.class, config.get("rightExtension"));
 
         leftExtension.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -65,4 +66,17 @@ public class Extension {
     public void setPos(String pos) {
         this.pos = positions.get(pos);
     }
+
+    public int getCurrentPos() {
+        return leftExtension.getCurrentPosition();
+    }
+
+    public double getVelocity() {
+        return leftExtension.getVelocity();
+    }
+
+    public double getError() {
+        return pidController.getPositionError();
+    }
+
 }

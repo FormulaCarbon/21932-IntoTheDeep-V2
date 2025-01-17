@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.PinpointDrive;
+import org.firstinspires.ftc.teamcode.subsystems.AutonPivot;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Extension;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
@@ -33,7 +34,7 @@ public class Sample_RR_3 extends LinearOpMode {
 
         Claw claw = new Claw(hardwareMap, util.deviceConf);
 
-        Pivot pivot = new Pivot(hardwareMap, util.deviceConf);
+        AutonPivot pivot = new AutonPivot(hardwareMap, util.deviceConf);
 
         Extension extension = new Extension(hardwareMap, util.deviceConf);
 
@@ -133,7 +134,7 @@ public class Sample_RR_3 extends LinearOpMode {
             // Optionally, log or handle the interruption
         }
     }
-    public void updateAll(Pivot pivot, Extension extension, Wrist wrist) {
+    public void updateAll(AutonPivot pivot, Extension extension, Wrist wrist) {
         while (opModeInInit() || opModeIsActive())
         {
 
@@ -150,7 +151,7 @@ public class Sample_RR_3 extends LinearOpMode {
         }
     }
 
-    public void setBucket(Action trajectory , Pivot pivot, Extension extension, Wrist wrist, Claw claw) {
+    public void setBucket(Action trajectory , AutonPivot pivot, Extension extension, Wrist wrist, Claw claw) {
         pivot.setPos("Basket");
         wrist.setPos("Auton Idle");
         //pivot.setkP("Extended");
@@ -167,7 +168,7 @@ public class Sample_RR_3 extends LinearOpMode {
 
     }
 
-    public void getBlock(Action trajectory , Pivot pivot, Extension extension, Wrist wrist, Claw claw) {
+    public void getBlock(Action trajectory , AutonPivot pivot, Extension extension, Wrist wrist, Claw claw) {
         extension.setPos("Idle");
 
 
