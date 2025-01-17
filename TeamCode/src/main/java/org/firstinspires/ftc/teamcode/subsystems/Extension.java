@@ -39,8 +39,8 @@ public class Extension {
 
         positions.put("Intake", 1000);
         positions.put("Idle",   50);
-        positions.put("Basket", 2300);
-        positions.put("Hang", 2300);
+        positions.put("Basket", 2400);
+        positions.put("Hang", 2400);
         positions.put("Retract", 1400);
     }
 
