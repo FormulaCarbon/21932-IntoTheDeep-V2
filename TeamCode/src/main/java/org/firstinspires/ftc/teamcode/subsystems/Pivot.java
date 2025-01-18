@@ -85,6 +85,8 @@ public class Pivot {
 
         power = pidController.calculate(curLeft) + (k * Math.cos(pos));
 
+        power = checkReset(power);
+
         if (!Util.inThresh(power, lastPower, 0.001)) {
             applyPower(power);
             lastPower = power;
@@ -129,6 +131,21 @@ public class Pivot {
 
     public double getVelocity() {
         return leftPivot.getVelocity();
+    }
+
+    public double checkReset(double power) {
+        if (reset.isPressed()) {
+            leftPivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightPivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftPivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightPivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            if (pos == positions.get("Down")) {
+                return 0.0;
+            }
+
+        }
+        return power;
     }
 
 }
