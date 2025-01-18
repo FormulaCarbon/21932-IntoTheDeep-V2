@@ -31,6 +31,9 @@ public class IntoTheDeep extends LinearOpMode {
 
     String sequence = "Sample";
 
+    public static int pchange = 400;
+    public static int pchange2 = 2000;
+
     @Override
     public void runOpMode() throws InterruptedException {
         Util util = new Util();
@@ -52,7 +55,7 @@ public class IntoTheDeep extends LinearOpMode {
             drive.getXYZ(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
 
             increment(gamepad1.right_bumper, gamepad1.left_bumper, sequence);
-            setPositions(incr, sequence, pivot, extension, wrist);
+            setPositions(incr, sequence, pivot, extension, wrist, pivotManual, extensionManual);
 
             /*if (gamepad1.x && wristReady) {
                 wristManual = true;
@@ -67,7 +70,7 @@ public class IntoTheDeep extends LinearOpMode {
                 wristReady = false;
             }*/
 
-            if (gamepad2.dpad_up && turnReady) {
+            /*if (gamepad2.dpad_up && turnReady) {
                 wrist.setRotationPos(0);
                 turnReady = false;
             }
@@ -82,7 +85,7 @@ public class IntoTheDeep extends LinearOpMode {
             else if (gamepad2.dpad_right && turnReady) {
                 wrist.setRotationPos(1);
                 turnReady = false;
-            }
+            }*/
 
             if (gamepad1.dpad_up && turnReady) {
                 wrist.setRotationPos(0);
@@ -113,12 +116,27 @@ public class IntoTheDeep extends LinearOpMode {
                 incr = -3;
             }
 
+            if (gamepad2.dpad_down && extensionReady) {
+                extension.setDirectPos(extension.getCurrentPos() - 50);
+                extensionManual = true;
+                extensionReady = false;
+            }
+
+            if (gamepad2.b && pivotReady) {
+                incr = -5;
+            }
+            if (gamepad2.a && pivotReady) {
+                incr = -6;
+            }
+
             if (gamepad2.right_bumper || gamepad2.left_bumper || gamepad1.right_bumper || gamepad1.left_bumper)
             {
                 wristManual = false;
                 extensionManual = pivotManual =  false;
 
             }
+
+
 
 
 
@@ -174,13 +192,17 @@ public class IntoTheDeep extends LinearOpMode {
         }
     }
 
-    public void setPositions(int pos, String sequence, Pivot pivot, Extension extension, Wrist wrist)  {
+    public void setPositions(int pos, String sequence, Pivot pivot, Extension extension, Wrist wrist, boolean pMan, boolean eMan)  {
         if (sequence.equals("Sample")) {
             switch (pos) {
                 case 0: // Idle
-                    pivot.setPos("Idle");
-                    pivot.setkP("Normal");
-                    extension.setPos("Idle");
+                    if (!pMan) {
+                        pivot.setPos("Idle");
+                        pivot.setkP("Normal");
+                    }
+                    if (!eMan) {
+                        extension.setPos("Idle");
+                    }
                     wrist.setBicepPos("Idle");
                     wrist.setForearmPos("Idle");
                     break;
@@ -253,12 +275,18 @@ public class IntoTheDeep extends LinearOpMode {
                     extension.setPos("Idle");
                     break;
                 case -2: // Hang Extend
-                    pivot.setPos("Idle");
+                    pivot.setPos("Hang");
                     extension.setPos("Hang");
                     break;
                 case -3: // Hang Retract
                     extension.setPos("Retract");
                     break;
+                case -5:
+
+                    pivot.setDirectPos(pivot.getTarget() - pchange);
+
+                case -6:
+                    pivot.setDirectPos(pivot.getTarget() - pchange2);
             }
         }
 

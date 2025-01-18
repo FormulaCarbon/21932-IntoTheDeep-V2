@@ -9,8 +9,6 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-
-import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.PinpointDrive;
 import org.firstinspires.ftc.teamcode.subsystems.AutonPivot;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
@@ -19,13 +17,12 @@ import org.firstinspires.ftc.teamcode.subsystems.Pivot;
 import org.firstinspires.ftc.teamcode.subsystems.Util;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 
-import java.util.HashMap;
 @Config
-@Autonomous(name = "Sample Cycle (3)", group = "Sensor")
-public class Sample_RR_3 extends LinearOpMode {
+@Autonomous(name = "Pivot Down", group = "Sensor")
+public class down extends LinearOpMode {
 
     public static int tickChange = 100, pos = 150;
-    public static double basketX = 58, basketY = 58;
+    public static double basketX = 60, basketY = 60;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -44,8 +41,7 @@ public class Sample_RR_3 extends LinearOpMode {
         PinpointDrive drive = new PinpointDrive(hardwareMap, startPos);
 
         TrajectoryActionBuilder bucket0 = drive.actionBuilder(startPos)
-                .setTangent(3*Math.PI/2)
-                .splineToLinearHeading(new Pose2d(basketX,basketY, 5*Math.PI/4), 0);
+                .lineToX(-36);
 
         TrajectoryActionBuilder wait1 = drive.actionBuilder(startPos)
                 .waitSeconds(1);
@@ -99,31 +95,11 @@ public class Sample_RR_3 extends LinearOpMode {
         // Wait for the start button to be pressed
         waitForStart();
 
-        extension.setPos("Idle");
-
-
-        setBucket(bucket0.build(), pivot, extension, wrist, claw);
-        //sleep(500);
-
-        getBlock(block1.build(),pivot,extension,wrist,claw);
-        setBucket(bucket1.build(), pivot, extension, wrist, claw);
-        //sleep(500);
-
-        getBlock(block2.build(), pivot, extension, wrist, claw);
-        setBucket(bucket2.build(), pivot, extension, wrist, claw);
-        //sleep(500);
-
-        extension.setPos("Idle");
-        sleep(1000);
-
         pivot.setPos("Down");
 
-        //getBlock(block3.build(), pivot, extension, wrist, claw);
-        //setBucket(bucket3.build(), pivot, extension, wrist, claw);
-
-        Actions.runBlocking(park.build());
-
         sleep(2000);
+
+        Actions.runBlocking(bucket0.build());
 
     }
     public void sleep(int t) {
@@ -142,7 +118,6 @@ public class Sample_RR_3 extends LinearOpMode {
             pivot.update();
 
             extension.update();
-            //
             wrist.update();
             telemetry.addData("pos", pivot.getCurrent());
             telemetry.addData("target", pivot.getTarget());
@@ -151,11 +126,11 @@ public class Sample_RR_3 extends LinearOpMode {
         }
     }
 
-    public void setBucket(Action trajectory , Pivot pivot, Extension extension, Wrist wrist, Claw claw) {
+    public void setBucket(Action trajectory , AutonPivot pivot, Extension extension, Wrist wrist, Claw claw) {
         pivot.setPos("Basket");
         wrist.setPos("Auton Idle");
         //pivot.setkP("Extended");
-        sleep(3000);
+        sleep(500);
         extension.setPos("Basket");
 
         Actions.runBlocking(trajectory);
@@ -168,19 +143,18 @@ public class Sample_RR_3 extends LinearOpMode {
 
     }
 
-    public void getBlock(Action trajectory , Pivot pivot, Extension extension, Wrist wrist, Claw claw) {
+    public void getBlock(Action trajectory , AutonPivot pivot, Extension extension, Wrist wrist, Claw claw) {
         extension.setPos("Idle");
 
 
         Actions.runBlocking(trajectory);
-        sleep(1000);
         pivot.setkP("Normal");
         pivot.setPos("Down");
 
         wrist.setPos("Intake");
         sleep(1500);
         claw.directSet(Claw.closed);
-        sleep(1000);
+        sleep(500);
         wrist.setPos("Auton Idle");
         pivot.setPos("Basket");
 

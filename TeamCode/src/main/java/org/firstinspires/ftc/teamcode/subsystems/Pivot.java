@@ -25,7 +25,10 @@ public class Pivot {
     private int curLeft = 0, lAngle = curLeft;
     private int lta = 0;
 
-    public static double kP = 0.02, kI = 0, kD = 0.0005, k = 0, extendedKp = 0.03, zeroKp = 0.005, slowKp = 0.02;
+
+    public static int basketPos = 2000, hangPos = 2100;
+
+    public static double kP = 0.002, kI = 0, kD = 0, k = 0, extendedKp = 0.003, zeroKp = 0.005, slowKp = 0.02, tol = 0.005;
     
     PIDController pidController = new PIDController(kP, kI, kD);
 
@@ -59,11 +62,11 @@ public class Pivot {
         profile = new TrapezoidProfile(constraints, new TrapezoidProfile.State(0, 0));
 
         positions.put("Down", 0);
-        positions.put("Basket", 320);
-        positions.put("Idle", 320);
-        positions.put("Start", 200);
-        positions.put("Hang", 310);
-        positions.put("Lift", 330);
+        positions.put("Basket", basketPos);
+        positions.put("Idle", basketPos);
+        positions.put("Start", 1370);
+        positions.put("Hang", hangPos);
+        positions.put("Lift", 2100);
 
         kPs.put("Normal", kP);
         kPs.put("Extended", extendedKp);
@@ -87,7 +90,7 @@ public class Pivot {
 
         power = checkReset(power);
 
-        if (!Util.inThresh(power, lastPower, 0.001)) {
+        if (!Util.inThresh(power, lastPower, tol)) {
             applyPower(power);
             lastPower = power;
         }
@@ -135,10 +138,6 @@ public class Pivot {
 
     public double checkReset(double power) {
         if (reset.isPressed()) {
-            leftPivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            rightPivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            leftPivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            rightPivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
             if (pos == positions.get("Down")) {
                 return 0.0;
@@ -146,6 +145,10 @@ public class Pivot {
 
         }
         return power;
+    }
+
+    public void setDirectPos(int pos) {
+        this.pos = pos;
     }
 
 }

@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.subsystems.Util;
+
 import java.util.HashMap;
 
 @Config
@@ -23,7 +25,7 @@ public class AutonPivot {
     private int curLeft = 0, lAngle = curLeft;
     private int lta = 0;
 
-    public static double kP = 0.02, kI = 0, kD = 0.0005, k = 0, extendedKp = 0.03, zeroKp = 0.005, slowKp = 0.02;
+    public static double kP = 0.002, kI = 0, kD = 0, k = 0, extendedKp = 0.003, zeroKp = 0.005, slowKp = 0.02;
 
     PIDController pidController = new PIDController(kP, kI, kD);
 
@@ -57,11 +59,11 @@ public class AutonPivot {
         profile = new TrapezoidProfile(constraints, new TrapezoidProfile.State(0, 0));
 
         positions.put("Down", 0);
-        positions.put("Basket", 320);
-        positions.put("Idle", 320);
-        positions.put("Start", 200);
-        positions.put("Hang", 310);
-        positions.put("Lift", 330);
+        positions.put("Basket", 2100);
+        positions.put("Idle", 2100);
+        positions.put("Start", 1370);
+        positions.put("Hang", 2124);
+        positions.put("Lift", 2260);
 
         kPs.put("Normal", kP);
         kPs.put("Extended", extendedKp);
@@ -82,6 +84,8 @@ public class AutonPivot {
         pidController.setSetPoint(indexedPosition);
 
         power = pidController.calculate(curLeft) + (k * Math.cos(pos));
+
+        power = checkReset(power);
 
         if (!Util.inThresh(power, lastPower, 0.001)) {
             applyPower(power);
@@ -127,6 +131,17 @@ public class AutonPivot {
 
     public double getVelocity() {
         return leftPivot.getVelocity();
+    }
+
+    public double checkReset(double power) {
+        if (reset.isPressed()) {
+
+            if (pos == positions.get("Down")) {
+                return 0.0;
+            }
+
+        }
+        return power;
     }
 
 }
