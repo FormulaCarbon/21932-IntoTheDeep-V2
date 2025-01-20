@@ -7,7 +7,7 @@ import java.util.HashMap;
 @Config
 public class Util {
     public static double MAX_PIVOT_VELOCITY = 13700;
-    public static double MAX_PIVOT_ACCEL = 5138;
+    public static double MAX_PIVOT_ACCEL = 11000;
 
     public static double MAX_PIVOT_AUTO_ACCEL = 5138;
 
