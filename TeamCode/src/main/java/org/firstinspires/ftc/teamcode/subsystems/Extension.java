@@ -17,7 +17,7 @@ public class Extension {
     private int pos;
     private int curLeft;
 
-    public static double kP = 0.01, kI = 0, kD = 0;
+    public static double kP = 0.01, kI = 0, kD = 0.0002;
     PIDController pidController = new PIDController(kP, kI, kD);
     public static int PIDTol = 10, PIDThresh = 10;
 
@@ -37,8 +37,8 @@ public class Extension {
 
         pidController.setTolerance(PIDTol);
 
-        positions.put("Intake", 1000);
-        positions.put("Idle",   50);
+        positions.put("Intake", 1200);
+        positions.put("Idle",   0);
         positions.put("Basket", 2500);
         positions.put("Hang", 2500);
         positions.put("Retract", 1400);
@@ -77,6 +77,10 @@ public class Extension {
 
     public double getError() {
         return pidController.getPositionError();
+    }
+
+    public double getPower() {
+        return leftExtension.getPower();
     }
 
     public void setDirectPos(int pos) {

@@ -151,6 +151,7 @@ public class IntoTheDeep extends LinearOpMode {
             telemetry.addData("tar", pivot.getTarget());
             telemetry.addData("cur", pivot.getCurrent());
             telemetry.addData("pow", pivot.getPower());
+            telemetry.addData("epow", extension.getPower());
             telemetry.addData("vel", pivot.getVelocity());
             telemetry.addData("extension vel", extension.getVelocity());
             telemetry.addData("error", extension.getError());
