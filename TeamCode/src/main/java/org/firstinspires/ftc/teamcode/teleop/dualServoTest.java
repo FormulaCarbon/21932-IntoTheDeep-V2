@@ -18,7 +18,7 @@ public class dualServoTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Servo servo1 = hardwareMap.get(Servo.class, servoName1);
-        Servo servo2 = hardwareMap.get(Servo.class, servoName1);
+        Servo servo2 = hardwareMap.get(Servo.class, servoName2);
         waitForStart();
 
         if (isStopRequested()) return;
