@@ -32,5 +32,10 @@ public class Util {
         deviceConf.put("claw", "claw");
         deviceConf.put("reset", "reset");
         deviceConf.put("pinpoint", "pinpoint");
+        deviceConf.put("swing1", "sw1");
+        deviceConf.put("swing2", "sw2");
+        deviceConf.put("reset", "reset");
+        deviceConf.put("turn", "specTurn");
+        deviceConf.put("specClaw", "specClaw");
     }
 }

@@ -69,6 +69,27 @@ public class dualServoTest extends LinearOpMode {
                 servo2.setPosition(0);
             }
 
+            if (gamepad2.dpad_right)
+            {
+                servo1.setPosition(servo1.getPosition() + change);
+                servo2.setPosition(servo2.getPosition() + change);
+            }
+            if (gamepad2.dpad_left)
+            {
+                servo1.setPosition(servo1.getPosition() - change);
+                servo2.setPosition(servo2.getPosition() - change);
+            }
+            if (gamepad2.dpad_up)
+            {
+                servo1.setPosition(1);
+                servo2.setPosition(1);
+            }
+            if (gamepad2.dpad_down)
+            {
+                servo1.setPosition(0);
+                servo2.setPosition(0);
+            }
+
             telemetry.addData("Pos1", servo1.getPosition());
             telemetry.addData("pos2",  servo2.getPosition());
 

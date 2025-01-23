@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Extension;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
+import org.firstinspires.ftc.teamcode.subsystems.SpecMec;
 import org.firstinspires.ftc.teamcode.subsystems.Util;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 
@@ -24,7 +25,7 @@ public class IntoTheDeep extends LinearOpMode {
     private int incr = 1;
     boolean incrUpdate = false;
 
-    public static int maxSampleSteps = 8, maxSpecimenSteps = 8;
+    public static int maxSampleSteps = 8, maxSpecimenSteps = 4;
 
     boolean pivotReady, wristReady, extensionReady, swapReady, cycleReady, clawReady, turnReady;
     boolean wristManual = false, extensionManual = false, pivotManual = false;
@@ -42,6 +43,8 @@ public class IntoTheDeep extends LinearOpMode {
         Extension extension = new Extension(hardwareMap, util.deviceConf);
         Wrist wrist = new Wrist(hardwareMap, util.deviceConf);
         Claw claw = new Claw(hardwareMap, util.deviceConf);
+        SpecMec specMec = new SpecMec(hardwareMap, util.deviceConf);
+        specMec.setPosition("Intake", "Intake");
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         waitForStart();
@@ -55,7 +58,7 @@ public class IntoTheDeep extends LinearOpMode {
             drive.getXYZ(gamepad1.left_stick_x, gamepad1.left_stick_y, -gamepad1.right_stick_x);
 
             increment(gamepad1.right_bumper, gamepad1.left_bumper, sequence);
-            setPositions(incr, sequence, pivot, extension, wrist, pivotManual, extensionManual);
+            setPositions(incr, sequence, pivot, extension, wrist, specMec, pivotManual, extensionManual);
 
             /*if (gamepad1.x && wristReady) {
                 wristManual = true;
@@ -86,6 +89,13 @@ public class IntoTheDeep extends LinearOpMode {
                 wrist.setRotationPos(1);
                 turnReady = false;
             }*/
+
+            if (gamepad2.right_bumper) {
+                sequence = "Specimen";
+            }
+            if (gamepad2.left_bumper) {
+                sequence = "Sample";
+            }
 
             if (gamepad1.dpad_up && turnReady) {
                 wrist.setRotationPos(0);
@@ -129,6 +139,13 @@ public class IntoTheDeep extends LinearOpMode {
                 incr = -6;
             }
 
+            if (gamepad2.dpad_up) {
+                incr = -7;
+            }
+            if (gamepad2.dpad_down) {
+                incr = -8;
+            }
+
             if (gamepad2.right_bumper || gamepad2.left_bumper || gamepad1.right_bumper || gamepad1.left_bumper)
             {
                 wristManual = false;
@@ -145,9 +162,11 @@ public class IntoTheDeep extends LinearOpMode {
             extension.update();
             wrist.update();
             claw.update(gamepad1.a);
+            specMec.update();
 
 
             telemetry.addData("incr", incr);
+            telemetry.addData("seq", sequence);
             telemetry.addData("tar", pivot.getTarget());
             telemetry.addData("cur", pivot.getCurrent());
             telemetry.addData("pow", pivot.getPower());
@@ -193,7 +212,7 @@ public class IntoTheDeep extends LinearOpMode {
         }
     }
 
-    public void setPositions(int pos, String sequence, Pivot pivot, Extension extension, Wrist wrist, boolean pMan, boolean eMan)  {
+    public void setPositions(int pos, String sequence, Pivot pivot, Extension extension, Wrist wrist, SpecMec specMec, boolean pMan, boolean eMan)  {
         if (sequence.equals("Sample")) {
             switch (pos) {
                 case 0: // Idle
@@ -285,9 +304,37 @@ public class IntoTheDeep extends LinearOpMode {
                 case -5:
 
                     pivot.setDirectPos(pivot.getTarget() - pchange);
-
+                    break;
                 case -6:
                     pivot.setDirectPos(pivot.getTarget() - pchange2);
+                    break;
+                case -7:
+                    specMec.setPosition("Intake", "Intake");
+                    break;
+                case -8:
+                    specMec.setPosition("Score", "Score");
+                    break;
+
+            }
+        }
+        else if (sequence.equals("Specimen")) {
+            switch (pos) {
+                case 0:
+                    specMec.setPosition("Intake", "Intake");
+                    specMec.openClaw();
+                    break;
+                case 1:
+                    specMec.closeClaw();
+                    break;
+                case 2:
+                    specMec.setPosition("Idle", "Score");
+                    break;
+                case 3:
+                    specMec.setPosition("Score", "Score");
+                    break;
+                case 4:
+                    specMec.openClaw();
+                    break;
             }
         }
 
