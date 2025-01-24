@@ -37,5 +37,6 @@ public class Util {
         deviceConf.put("reset", "reset");
         deviceConf.put("turn", "specTurn");
         deviceConf.put("specClaw", "specClaw");
+        deviceConf.put("colorSensor", "sensor");
     }
 }

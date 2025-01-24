@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.HashMap;
@@ -11,18 +13,28 @@ public class SpecMec {
 
     private Servo swing1, swing2, turn, claw;
 
-    public static double scorePos = 0.9, intakePos = 0.0, turn0 = 0.88, turn1 = 0.2, idlePos = 0.5, close = 0.88, open = 0.43;
+    public static double scorePos = 0.9, intakePos = 0.1, turn0 = 0.25, turn1 = 0.92, idlePos = 0.5, close = 0.59, open = 0.15;
+    public static int ledBrightness = 100;
 
     public static HashMap<String, Double> swingPos = new HashMap<String, Double>();
     public static HashMap<String, Double> turnPos = new HashMap<String, Double>();
 
-    private double swPos, tPos;
+    public static double redThresh = 0.008, blueThresh = 0.008;
+    ColorRangefinder sensor;
+    NormalizedRGBA colors;
+
+
+
+    private double swPos, tPos, clawPos = open;
 
     public SpecMec(HardwareMap hwMap, HashMap<String, String> config) {
         swing1 = hwMap.servo.get(config.get("swing1"));
         swing2 = hwMap.servo.get(config.get("swing2"));
         turn = hwMap.servo.get(config.get("turn"));
         claw = hwMap.servo.get(config.get("specClaw"));
+        sensor = new ColorRangefinder(hwMap.get(RevColorSensorV3.class, config.get("colorSensor")));
+        sensor.setLedBrightness(ledBrightness);
+        colors = sensor.emulator.getNormalizedColors();
 
         swingPos.put("Intake",      intakePos);
         swingPos.put("Score",        scorePos);
@@ -47,11 +59,26 @@ public class SpecMec {
         turn.setPosition(tPos);
     }
 
+    public void updateClaw() {
+        claw.setPosition(clawPos);
+    }
+
     public void closeClaw() {
-        claw.setPosition(close);
+        clawPos = close;
     }
 
     public void openClaw() {
-        claw.setPosition(open);
+        clawPos = open;
+    }
+
+    public void checkSensor() {
+        colors = sensor.emulator.getNormalizedColors();
+        if (colors.red > redThresh || colors.blue > blueThresh) {
+            clawPos = close;
+        }
+    }
+
+    public NormalizedRGBA getColors() {
+        return colors;
     }
 }

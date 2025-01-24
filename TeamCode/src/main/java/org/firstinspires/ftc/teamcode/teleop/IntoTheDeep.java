@@ -25,7 +25,7 @@ public class IntoTheDeep extends LinearOpMode {
     private int incr = 1;
     boolean incrUpdate = false;
 
-    public static int maxSampleSteps = 8, maxSpecimenSteps = 4;
+    public static int maxSampleSteps = 8, maxSpecimenSteps = 3;
 
     boolean pivotReady, wristReady, extensionReady, swapReady, cycleReady, clawReady, turnReady;
     boolean wristManual = false, extensionManual = false, pivotManual = false;
@@ -163,6 +163,7 @@ public class IntoTheDeep extends LinearOpMode {
             wrist.update();
             claw.update(gamepad1.a);
             specMec.update();
+            specMec.updateClaw();
 
 
             telemetry.addData("incr", incr);
@@ -174,6 +175,8 @@ public class IntoTheDeep extends LinearOpMode {
             telemetry.addData("vel", pivot.getVelocity());
             telemetry.addData("extension vel", extension.getVelocity());
             telemetry.addData("error", extension.getError());
+            telemetry.addData("red", specMec.getColors().red);
+            telemetry.addData("blue", specMec.getColors().blue);
 
             telemetry.update();
         }
@@ -324,15 +327,14 @@ public class IntoTheDeep extends LinearOpMode {
                     specMec.openClaw();
                     break;
                 case 1:
-                    specMec.closeClaw();
+                    specMec.setPosition("Intake", "Intake");
+                    specMec.checkSensor();
                     break;
                 case 2:
-                    specMec.setPosition("Idle", "Score");
+                    specMec.setPosition("Score", "Score");
                     break;
                 case 3:
                     specMec.setPosition("Score", "Score");
-                    break;
-                case 4:
                     specMec.openClaw();
                     break;
             }
