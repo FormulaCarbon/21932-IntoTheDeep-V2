@@ -24,7 +24,7 @@ import java.util.HashMap;
 @Autonomous(name = "Spec Cycle (4)", group = "Sensor")
 public class Specimen_RR extends LinearOpMode {
 
-    public static double intakeX= -56, intakeY = 60, hangY = 32;
+    public static double intakeX= -52, intakeY = 60, hangY = 32;
     @Override
     public void runOpMode() throws InterruptedException {
         // Hardware Map HashMap
@@ -38,58 +38,60 @@ public class Specimen_RR extends LinearOpMode {
 
         Wrist wrist = new Wrist(hardwareMap, util.deviceConf);
 
-        Pose2d startPos = new Pose2d(-4, 62, 3*Math.PI/2);
+        Pose2d startPos = new Pose2d(0, 62, 3*Math.PI/2);
         PinpointDrive drive = new PinpointDrive(hardwareMap, startPos);
 
 
 
         TrajectoryActionBuilder hang0 = drive.actionBuilder(startPos)
-                .strafeTo(new Vector2d(-4, hangY));
+                .strafeTo(new Vector2d(0, hangY));
 
         TrajectoryActionBuilder pushBlocks = hang0.endTrajectory().fresh()
                 .setTangent(Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-4, 40), Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-34, 40), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(0, 40), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-38, 40), 3*Math.PI/2)
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-34, 12), 3*Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-46, 12), Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-46, 56), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-38, 12), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-50, 12), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-50, 56), Math.PI/2)
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-46, 12), 3*Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-56, 12), Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-56, 60), Math.PI/2);
+                .splineToConstantHeading(new Vector2d(-50, 12), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-60, 12), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-60, 56), Math.PI/2)
+                .setTangent(0)
+                .splineToConstantHeading(new Vector2d(intakeX, intakeY), Math.PI/2);
 
         TrajectoryActionBuilder hang1 = pushBlocks.endTrajectory().fresh()
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-6, 40), 3*Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-6, hangY), 3*Math.PI/2);
+                .splineToConstantHeading(new Vector2d(-2, 40), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-2, hangY), 3*Math.PI/2);
 
 
         TrajectoryActionBuilder block2 = hang1.endTrajectory().fresh()
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-6, 40), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-2, 40), Math.PI/2)
                 .setTangent(Math.PI/2)
                 .splineToConstantHeading(new Vector2d(intakeX, intakeY), Math.PI/2);
 
         TrajectoryActionBuilder hang2 = block2.endTrajectory().fresh()
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-8, 40), 3*Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-8, hangY), 3*Math.PI/2);
+                .splineToConstantHeading(new Vector2d(-4, 40), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-4, hangY), 3*Math.PI/2);
 
         TrajectoryActionBuilder block3 = hang2.endTrajectory().fresh()
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-8, 40), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-4, 40), Math.PI/2)
                 .setTangent(Math.PI/2)
                 .splineToConstantHeading(new Vector2d(intakeX, intakeY), Math.PI/2);
 
         TrajectoryActionBuilder hang3 = block3.endTrajectory().fresh()
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-10, 40), 3*Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-10, hangY), 3*Math.PI/2);
+                .splineToConstantHeading(new Vector2d(-8, 40), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-8, hangY), 3*Math.PI/2);
 
         TrajectoryActionBuilder park = hang3.endTrajectory().fresh()
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-10, 40), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-8, 40), Math.PI/2)
                 .setTangent(Math.PI/2)
                 .splineToConstantHeading(new Vector2d(intakeX, intakeY), Math.PI/2);
 
@@ -118,6 +120,16 @@ public class Specimen_RR extends LinearOpMode {
         Actions.runBlocking(pushBlocks.build());
         sleep(2000);
         Actions.runBlocking(hang1.build());
+        sleep(2000);
+        Actions.runBlocking(block2.build());
+        sleep(2000);
+        Actions.runBlocking(hang2.build());
+        sleep(2000);
+        Actions.runBlocking(block3.build());
+        sleep(2000);
+        Actions.runBlocking(hang3.build());
+        sleep(2000);
+        Actions.runBlocking(park.build());
         sleep(2000);
 
     }
