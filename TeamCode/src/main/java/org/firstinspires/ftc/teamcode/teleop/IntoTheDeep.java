@@ -25,7 +25,7 @@ public class IntoTheDeep extends LinearOpMode {
     private int incr = 1;
     boolean incrUpdate = false;
 
-    public static int maxSampleSteps = 8, maxSpecimenSteps = 3;
+    public static int maxSampleSteps = 8, maxSpecimenSteps = 4;
 
     boolean pivotReady, wristReady, extensionReady, swapReady, cycleReady, clawReady, turnReady;
     boolean wristManual = false, extensionManual = false, pivotManual = false;
@@ -92,6 +92,7 @@ public class IntoTheDeep extends LinearOpMode {
 
             if (gamepad2.right_bumper) {
                 sequence = "Specimen";
+                incr = 0;
             }
             if (gamepad2.left_bumper) {
                 sequence = "Sample";
@@ -329,11 +330,15 @@ public class IntoTheDeep extends LinearOpMode {
                 case 1:
                     specMec.setPosition("Intake", "Intake");
                     specMec.checkSensor();
+                    specMec.closeClaw();
                     break;
                 case 2:
-                    specMec.setPosition("Score", "Score");
+                    specMec.setPosition("Idle", "Score");
                     break;
                 case 3:
+                    specMec.setPosition("Score", "Score");
+                    break;
+                case 4:
                     specMec.setPosition("Score", "Score");
                     specMec.openClaw();
                     break;
