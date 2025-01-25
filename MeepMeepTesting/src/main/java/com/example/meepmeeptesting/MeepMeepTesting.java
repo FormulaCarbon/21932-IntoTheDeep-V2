@@ -36,8 +36,8 @@ public class MeepMeepTesting {
 
                 .strafeTo(new Vector2d(-60, 60))
 
-                .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-2, 40), 3*Math.PI/2)
+                .setTangent(0)
+                .splineToConstantHeading(new Vector2d(-2, 26), 3*Math.PI/2)
                 //.splineToConstantHeading(new Vector2d(-2, 60-10), 3*Math.PI/2)
 
                 .setTangent(3 * Math.PI/2)
