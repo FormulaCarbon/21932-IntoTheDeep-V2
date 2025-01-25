@@ -88,7 +88,7 @@ public class Pivot {
 
         power = pidController.calculate(curLeft) + (k * Math.cos(pos));
 
-        power = checkReset(power);
+        //power = checkReset(power);
 
         if (!Util.inThresh(power, lastPower, tol)) {
             applyPower(power);

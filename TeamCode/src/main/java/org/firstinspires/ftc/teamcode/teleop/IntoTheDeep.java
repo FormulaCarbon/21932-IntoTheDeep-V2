@@ -25,7 +25,7 @@ public class IntoTheDeep extends LinearOpMode {
     private int incr = 1;
     boolean incrUpdate = false;
 
-    public static int maxSampleSteps = 8, maxSpecimenSteps = 4;
+    public static int maxSampleSteps = 8, maxSpecimenSteps = 4, maxIntakeSteps = 4;
 
     boolean pivotReady, wristReady, extensionReady, swapReady, cycleReady, clawReady, turnReady;
     boolean wristManual = false, extensionManual = false, pivotManual = false;
@@ -96,6 +96,11 @@ public class IntoTheDeep extends LinearOpMode {
             }
             if (gamepad2.left_bumper) {
                 sequence = "Sample";
+                incr = 0;
+            }
+            if (gamepad2.a) {
+                sequence = "Intake";
+                incr = 0;
             }
 
             if (gamepad1.dpad_up && turnReady) {
@@ -133,18 +138,19 @@ public class IntoTheDeep extends LinearOpMode {
                 extensionReady = false;
             }
 
-            if (gamepad2.b && pivotReady) {
-                incr = -5;
-            }
-            if (gamepad2.a && pivotReady) {
-                incr = -6;
-            }
-
             if (gamepad2.dpad_up) {
                 incr = -7;
             }
             if (gamepad2.dpad_down) {
                 incr = -8;
+            }
+
+            if (gamepad2.y) {
+                drive.slowModeOn();
+            }
+
+            if (gamepad2.x) {
+                drive.slowModeOf();
             }
 
             if (gamepad2.right_bumper || gamepad2.left_bumper || gamepad1.right_bumper || gamepad1.left_bumper)
@@ -211,6 +217,21 @@ public class IntoTheDeep extends LinearOpMode {
             }
 
             if (incr > maxSpecimenSteps) {
+                incr = 0;
+            }
+        }
+        else if (sequence.equals("Intake")) {
+            if (downFlag && !incrUpdate && incr > 0) {
+                incr -= 1;
+                incrUpdate = true;
+            } else if (upFlag && !incrUpdate) {
+                incr += 1;
+                incrUpdate = true;
+            } else if (!upFlag && !downFlag) {
+                incrUpdate = false;
+            }
+
+            if (incr > maxIntakeSteps) {
                 incr = 0;
             }
         }
@@ -329,18 +350,63 @@ public class IntoTheDeep extends LinearOpMode {
                     break;
                 case 1:
                     specMec.setPosition("Intake", "Intake");
-                    specMec.checkSensor();
+                    //specMec.checkSensor();
                     specMec.closeClaw();
                     break;
                 case 2:
                     specMec.setPosition("Idle", "Score");
+                    specMec.closeClaw();
                     break;
                 case 3:
                     specMec.setPosition("Score", "Score");
+                    specMec.closeClaw();
                     break;
                 case 4:
                     specMec.setPosition("Score", "Score");
                     specMec.openClaw();
+                    break;
+            }
+        }
+        else if (sequence.equals("Intake")) {
+            switch(pos) {
+                case 0: // Sample Intake: Down, Unextended
+                    //if (extension.getCurrentPos() < 100) {
+                    pivot.setPos("Down");
+                    pivot.setkP("Normal");
+                    //}
+                    extension.setPos("Idle");
+                    wrist.setBicepPos("Idle");
+                    wrist.setForearmPos("Idle");
+
+                    break;
+                case 1: // Sample Extend
+                    pivot.setPos("Down");
+                    pivot.setkP("Extended");
+                    extension.setPos("Intake");
+                    wrist.setBicepPos("Idle");
+                    wrist.setForearmPos("Idle");
+                    break;
+                case 2: // Flip Down
+                    pivot.setPos("Down");
+                    pivot.setkP("Extended");
+                    extension.setPos("Intake");
+                    wrist.setBicepPos("Intake");
+                    wrist.setForearmPos("Intake");
+                    break;
+                case 3: // Flip Up
+                    pivot.setPos("Down");
+                    pivot.setkP("Extended");
+                    extension.setPos("Intake");
+                    wrist.setBicepPos("Idle");
+                    wrist.setForearmPos("Idle");
+                    break;
+                case 4: // Pullout
+                    pivot.setPos("Down");
+                    pivot.setkP("Normal");
+                    extension.setPos("Idle");
+                    wrist.setBicepPos("Basket");
+                    wrist.setForearmPos("Basket");
+                    wrist.setRotationPos(0);
                     break;
             }
         }

@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.AutonPivot;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Extension;
 import org.firstinspires.ftc.teamcode.subsystems.Pivot;
+import org.firstinspires.ftc.teamcode.subsystems.SpecMec;
 import org.firstinspires.ftc.teamcode.subsystems.Util;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 
@@ -24,7 +25,7 @@ import java.util.HashMap;
 @Autonomous(name = "Spec Cycle (4)", group = "Sensor")
 public class Specimen_RR extends LinearOpMode {
 
-    public static double intakeX= -52, intakeY = 60, hangY = 32;
+    public static double intakeX= -52, intakeY = 60, hangY = 26;
     @Override
     public void runOpMode() throws InterruptedException {
         // Hardware Map HashMap
@@ -38,7 +39,9 @@ public class Specimen_RR extends LinearOpMode {
 
         Wrist wrist = new Wrist(hardwareMap, util.deviceConf);
 
-        Pose2d startPos = new Pose2d(0, 62, 3*Math.PI/2);
+        SpecMec specMec = new SpecMec(hardwareMap, util.deviceConf);
+
+        Pose2d startPos = new Pose2d(0, 58, 3*Math.PI/2);
         PinpointDrive drive = new PinpointDrive(hardwareMap, startPos);
 
 
@@ -64,7 +67,7 @@ public class Specimen_RR extends LinearOpMode {
         TrajectoryActionBuilder hang1 = pushBlocks.endTrajectory().fresh()
                 .setTangent(3 * Math.PI/2)
                 .splineToConstantHeading(new Vector2d(-2, 40), 3*Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-2, hangY), 3*Math.PI/2);
+                .splineToConstantHeading(new Vector2d(-2, hangY-10), 3*Math.PI/2);
 
 
         TrajectoryActionBuilder block2 = hang1.endTrajectory().fresh()
@@ -95,7 +98,7 @@ public class Specimen_RR extends LinearOpMode {
                 .setTangent(Math.PI/2)
                 .splineToConstantHeading(new Vector2d(intakeX, intakeY), Math.PI/2);
 
-        Thread update = new Thread(()->updateAll(pivot, extension, wrist));
+        Thread update = new Thread(()->updateAll(pivot, extension, wrist, specMec));
 
 
         // go to start pos
@@ -104,8 +107,9 @@ public class Specimen_RR extends LinearOpMode {
         wrist.setForearmPos("Start");
         wrist.setRotationPos(0);
         pivot.setPos("Start");
-        pivot.setkP("Normal");
-        update.start();*/
+        pivot.setkP("Normal");*/
+        specMec.setPosition("Start", "Start");
+        update.start();
 
         telemetry.addData("pos", pivot.getCurrent());
         telemetry.addData("target", pivot.getTarget());
@@ -113,24 +117,25 @@ public class Specimen_RR extends LinearOpMode {
         telemetry.update();
 
         // Wait for the start button to be pressed
+        specMec.closeClaw();
         waitForStart();
 
-        Actions.runBlocking(hang0.build());
-        sleep(2000);
-        Actions.runBlocking(pushBlocks.build());
-        sleep(2000);
-        Actions.runBlocking(hang1.build());
-        sleep(2000);
-        Actions.runBlocking(block2.build());
-        sleep(2000);
-        Actions.runBlocking(hang2.build());
-        sleep(2000);
-        Actions.runBlocking(block3.build());
-        sleep(2000);
-        Actions.runBlocking(hang3.build());
-        sleep(2000);
-        Actions.runBlocking(park.build());
-        sleep(2000);
+        hang(hang0.build(), pivot, extension, wrist, claw, specMec);
+
+        getSpec(pushBlocks.build(), pivot, extension, wrist, claw, specMec);
+
+        hang(hang1.build(), pivot, extension, wrist, claw, specMec);
+
+        getSpec(block2.build(), pivot, extension, wrist, claw, specMec);
+
+        hang(hang2.build(), pivot, extension, wrist, claw, specMec);
+
+        getSpec(block3.build(), pivot, extension, wrist, claw, specMec);
+
+        hang(hang3.build(), pivot, extension, wrist, claw, specMec);
+
+        getSpec(park.build(), pivot, extension, wrist, claw, specMec);
+
 
     }
     public void sleep(int t) {
@@ -141,53 +146,40 @@ public class Specimen_RR extends LinearOpMode {
             // Optionally, log or handle the interruption
         }
     }
-    public void updateAll(Pivot pivot, Extension extension, Wrist wrist) {
+    public void updateAll(Pivot pivot, Extension extension, Wrist wrist, SpecMec specMec) {
         while (opModeInInit() || opModeIsActive())
         {
 
 
-            pivot.update();
+            /*pivot.update();
 
             extension.update();
-            wrist.update();
-            telemetry.addData("pos", pivot.getCurrent());
-            telemetry.addData("target", pivot.getTarget());
+            wrist.update();*/
+            specMec.updateClaw();
+            specMec.update();
+            telemetry.addData("pos", specMec.getPos());
+            telemetry.addData("target", specMec.getTarget());
             telemetry.addData("error", pivot.getError());
             telemetry.update();
         }
     }
 
-    public void setBucket(Action trajectory , Pivot pivot, Extension extension, Wrist wrist, Claw claw) {
-        pivot.setPos("Basket");
-        wrist.setPos("Auton Idle");
-        //pivot.setkP("Extended");
+    public void hang(Action trajectory , Pivot pivot, Extension extension, Wrist wrist, Claw claw, SpecMec specMec) {
+        specMec.setPosition("Idle", "Score");
         sleep(500);
-        extension.setPos("Basket");
-
         Actions.runBlocking(trajectory);
-        wrist.setPos("Basket");
+        specMec.setPosition("Score", "Score");
         sleep(500);
-        claw.directSet(Claw.open);
-        sleep(500);
-        wrist.setPos("Auton Idle");
+        specMec.openClaw();
         sleep(500);
 
     }
 
-    public void getBlock(Action trajectory , Pivot pivot, Extension extension, Wrist wrist, Claw claw) {
-        extension.setPos("Idle");
-
-
+    public void getSpec(Action trajectory , Pivot pivot, Extension extension, Wrist wrist, Claw claw, SpecMec specMec) {
+        specMec.setPosition("Intake", "Intake");
         Actions.runBlocking(trajectory);
-        pivot.setkP("Normal");
-        pivot.setPos("Down");
-
-        wrist.setPos("Intake");
-        sleep(1500);
-        claw.directSet(Claw.closed);
         sleep(500);
-        wrist.setPos("Auton Idle");
-        pivot.setPos("Basket");
+        specMec.closeClaw();
 
     }
 

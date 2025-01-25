@@ -13,7 +13,7 @@ public class SpecMec {
 
     private Servo swing1, swing2, turn, claw;
 
-    public static double scorePos = 0.84, intakePos = 0.2, turn0 = 0.25, turn1 = 0.92, idlePos = 1.0, close = 0.59, open = 0.15;
+    public static double scorePos = 1, intakePos = 0.19, turn0 = 0.285, turn1 = 0.39, idlePos = 0.9, close = 0.59, open = 0.15;
     public static int ledBrightness = 100;
 
     public static HashMap<String, Double> swingPos = new HashMap<String, Double>();
@@ -44,7 +44,8 @@ public class SpecMec {
 
         turnPos.put("Intake",      turn0);
         turnPos.put("Score",        turn1);
-        turnPos.put("Start",       0.0);
+        turnPos.put("Start",       turn0);
+
 
     }
 
@@ -80,5 +81,13 @@ public class SpecMec {
 
     public NormalizedRGBA getColors() {
         return colors;
+    }
+
+    public double getPos() {
+        return swing1.getPosition();
+    }
+
+    public double getTarget() {
+        return swPos;
     }
 }

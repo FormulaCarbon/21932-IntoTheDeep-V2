@@ -53,7 +53,7 @@ public class Sample_RR extends LinearOpMode {
 
         TrajectoryActionBuilder block1 = bucket0.endTrajectory().fresh()
                 .setTangent(5*Math.PI/4)
-                .splineToLinearHeading(new Pose2d(53, 40.5, 3*Math.PI/2), 3*Math.PI/2);
+                .splineToLinearHeading(new Pose2d(53, 39, 3*Math.PI/2), 3*Math.PI/2);
 
         TrajectoryActionBuilder bucket1 = block1.endTrajectory().fresh()
                 .setTangent(Math.PI/2)
@@ -62,7 +62,7 @@ public class Sample_RR extends LinearOpMode {
 
         TrajectoryActionBuilder block2 = bucket1.endTrajectory().fresh()
                 .setTangent(3*Math.PI/2)
-                .splineToLinearHeading(new Pose2d(63, 40.5, 3*Math.PI/2), 3*Math.PI/2);
+                .splineToLinearHeading(new Pose2d(63, 39, 3*Math.PI/2), 3*Math.PI/2);
 
         TrajectoryActionBuilder bucket2 = block2.endTrajectory().fresh()
                 .setTangent(Math.PI/2)
@@ -93,6 +93,7 @@ public class Sample_RR extends LinearOpMode {
 
         telemetry.addData("pos", pivot.getCurrent());
         telemetry.addData("target", pivot.getTarget());
+        telemetry.addData("power", pivot.getPower());
         telemetry.addData("error", pivot.getError());
         telemetry.update();
 
@@ -133,7 +134,7 @@ public class Sample_RR extends LinearOpMode {
 
         pivot.setPos("Basket");
         //pivot.setkP("Extended");
-        sleep(500);
+        sleep(1000);
         wrist.setPos("Auton Idle");
         wrist.setRotationPos(0);
         extension.setPos("Basket");
@@ -173,9 +174,12 @@ public class Sample_RR extends LinearOpMode {
 
             extension.update();
             wrist.update();
+
             telemetry.addData("pos", pivot.getCurrent());
             telemetry.addData("target", pivot.getTarget());
+            telemetry.addData("power", pivot.getPower());
             telemetry.addData("error", pivot.getError());
+            telemetry.addData("vel", pivot.getVelocity());
             telemetry.update();
         }
     }
@@ -184,7 +188,7 @@ public class Sample_RR extends LinearOpMode {
         pivot.setPos("Basket");
         wrist.setPos("Auton Idle");
         //pivot.setkP("Extended");
-        sleep(500);
+        sleep(1000);
         extension.setPos("Basket");
 
         Actions.runBlocking(trajectory);
@@ -209,8 +213,8 @@ public class Sample_RR extends LinearOpMode {
         sleep(1500);
         claw.directSet(Claw.closed);
         sleep(500);
-        wrist.setPos("Auton Idle");
-        pivot.setPos("Basket");
+       // wrist.setPos("Auton Idle");
+        //pivot.setPos("Basket");
 
     }
 
