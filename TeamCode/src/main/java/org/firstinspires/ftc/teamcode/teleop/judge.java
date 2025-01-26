@@ -3,11 +3,9 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.PinpointDrive;
 import org.firstinspires.ftc.teamcode.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Extension;
@@ -18,7 +16,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 
 @TeleOp
 @Config
-public class IntoTheDeep extends LinearOpMode {
+public class judge extends LinearOpMode {
 
 
 
@@ -95,19 +93,12 @@ public class IntoTheDeep extends LinearOpMode {
                 incr = 0;
             }
             if (gamepad2.left_bumper) {
-                specMec.setPosition("Start", "Intake");
-                specMec.closeClaw();
                 sequence = "Sample";
                 incr = 0;
             }
             if (gamepad2.a) {
-                specMec.setPosition("Start", "Intake");
-                specMec.closeClaw();
                 sequence = "Intake";
                 incr = 0;
-            }
-            if (gamepad2.b) {
-                incr = -5;
             }
 
             if (gamepad1.dpad_up && turnReady) {
@@ -145,13 +136,11 @@ public class IntoTheDeep extends LinearOpMode {
                 extensionReady = false;
             }
 
-
-            if ((gamepad1.left_trigger > 0.1)) {
-                drive.slowModeOn();
+            if (gamepad2.dpad_up) {
+                incr = -7;
             }
-
-            if ((gamepad1.left_trigger < 0.1) && !gamepad2.y) {
-                drive.slowModeOf();
+            if (gamepad2.dpad_down) {
+                incr = -8;
             }
 
             if (gamepad2.y) {
@@ -337,10 +326,16 @@ public class IntoTheDeep extends LinearOpMode {
                     break;
                 case -5:
 
-                    pivot.setDirectPos(-2100);
+                    pivot.setDirectPos(pivot.getTarget() - pchange);
                     break;
                 case -6:
                     pivot.setDirectPos(pivot.getTarget() - pchange2);
+                    break;
+                case -7:
+                    specMec.setPosition("Intake", "Intake");
+                    break;
+                case -8:
+                    specMec.setPosition("Score", "Score");
                     break;
 
             }

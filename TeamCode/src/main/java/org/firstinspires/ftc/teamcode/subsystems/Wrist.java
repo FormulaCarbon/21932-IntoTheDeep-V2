@@ -16,7 +16,7 @@ public class Wrist {
     public static HashMap<String, Double> bicepPositions = new HashMap<String, Double>();
     public static HashMap<String, Double> forearmPositions = new HashMap<String, Double>();
 
-    public static double intakepos = 0;
+    public static double intakepos = 0, bBasket = 0.33, fBasket = 0.4;
 
     public static double[] rotationPositions = new double[4];
 
@@ -26,13 +26,13 @@ public class Wrist {
         rotation = hwMap.servo.get(config.get("rotation"));
 
         bicepPositions.put("Intake",      0.123);
-        bicepPositions.put("Basket",      0.25);
+        bicepPositions.put("Basket",      bBasket);
         bicepPositions.put("Idle",        0.4);
         bicepPositions.put("Start",       0.8);
         bicepPositions.put("Auton Idle",  0.2);
 
         forearmPositions.put("Intake",      0.97);
-        forearmPositions.put("Basket",      0.3);
+        forearmPositions.put("Basket",      fBasket);
         forearmPositions.put("Idle",        1.0);
         forearmPositions.put("Start",       0.05);
         forearmPositions.put("Auton Idle",  0.6);

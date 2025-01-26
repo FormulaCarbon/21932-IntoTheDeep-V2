@@ -13,7 +13,7 @@ public class SpecMec {
 
     private Servo swing1, swing2, turn, claw;
 
-    public static double scorePos = 1, intakePos = 0.19, turn0 = 0.285, turn1 = 0.39, idlePos = 0.9, close = 0.59, open = 0.15;
+    public static double scorePos = 1, intakePos = 0.17, turn0 = 0.285, turn1 = 0.39, idlePos = 0.9, close = 0.59, open = 0.15;
     public static int ledBrightness = 100;
 
     public static HashMap<String, Double> swingPos = new HashMap<String, Double>();
@@ -25,7 +25,7 @@ public class SpecMec {
 
 
 
-    private double swPos, tPos, clawPos = open;
+    private double swPos=0, tPos = turn0, clawPos = open;
 
     public SpecMec(HardwareMap hwMap, HashMap<String, String> config) {
         swing1 = hwMap.servo.get(config.get("swing1"));

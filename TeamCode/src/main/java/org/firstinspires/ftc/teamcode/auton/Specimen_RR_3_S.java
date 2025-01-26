@@ -18,10 +18,10 @@ import org.firstinspires.ftc.teamcode.subsystems.Util;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 
 @Config
-@Autonomous(name = "Spec Cycle (2)", group = "Sensor")
-public class Specimen_RR extends LinearOpMode {
+@Autonomous(name = "Spec Cycle (3S)", group = "Sensor")
+public class Specimen_RR_3_S extends LinearOpMode {
 
-    public static double intakeX= -50, intakeY = 60, hangY = 26, startX =-8, startY = 64;
+    public static double intakeX= -50, intakeY = 60, hangY = 26, startX = -8, startY = 64;
     @Override
     public void runOpMode() throws InterruptedException {
         // Hardware Map HashMap
@@ -50,8 +50,8 @@ public class Specimen_RR extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(0, 40), Math.PI/2)
                 .splineToConstantHeading(new Vector2d(-38, 40), 3*Math.PI/2)
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-38, 12), 3*Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-48, 12), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-38, 16), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-48, 16), Math.PI/2)
                 .splineToConstantHeading(new Vector2d(-48, 56), Math.PI/2)
                 .strafeTo(new Vector2d(intakeX, intakeY-16));
 
@@ -67,9 +67,9 @@ public class Specimen_RR extends LinearOpMode {
 
         TrajectoryActionBuilder block2 = hang1.endTrajectory().fresh()
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-2, 40), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-2, 30), Math.PI/2)
                 .setTangent(Math.PI/2)
-                .splineToConstantHeading(new Vector2d(intakeX, intakeY-16), Math.PI/2);
+                .splineToConstantHeading(new Vector2d(intakeX, intakeY-6), Math.PI);
 
         TrajectoryActionBuilder back2 = block2.endTrajectory().fresh()
                 .strafeTo(new Vector2d(intakeX, intakeY-3));
@@ -80,6 +80,10 @@ public class Specimen_RR extends LinearOpMode {
         TrajectoryActionBuilder hang2 = grab2.endTrajectory().fresh()
                 .setTangent(0)
                 .splineToConstantHeading(new Vector2d(-4, hangY), 3*Math.PI/2);
+
+
+        TrajectoryActionBuilder backout = hang2.endTrajectory().fresh()
+                .strafeTo(new Vector2d(-4, 40));
 
         TrajectoryActionBuilder block3 = hang2.endTrajectory().fresh()
                 .setTangent(3 * Math.PI/2)
@@ -102,7 +106,7 @@ public class Specimen_RR extends LinearOpMode {
 
 
         // go to start pos
-    claw.directSet(Claw.closed);
+        claw.directSet(Claw.closed);
         wrist.setBicepPos("Start");
         wrist.setForearmPos("Start");
         wrist.setRotationPos(0);
@@ -120,25 +124,25 @@ public class Specimen_RR extends LinearOpMode {
         specMec.closeClaw();
         waitForStart();
 
-        pivot.setPos("Down");
+        pivot.setPos("Basket");
         wrist.setPos("Idle");
-        sleep(1500);
+        //sleep(500);
 
         specMec.setPosition("Idle", "Score");
         sleep(500);
         Actions.runBlocking(hang0.build());
         specMec.setPosition("Score", "Score");
-        sleep(500);
+        sleep(250);
         specMec.openClaw();
-        sleep(500);
+        //sleep(500);
 
         Actions.runBlocking(pushBlocks.build());
         specMec.setPosition("Intake", "Intake");
-        sleep(2000);
-        Actions.runBlocking(back1.build());
-        sleep(2000);
-        Actions.runBlocking(grab1.build());
         sleep(500);
+        Actions.runBlocking(back1.build());
+        sleep(500);
+        Actions.runBlocking(grab1.build());
+        //sleep(500);
         specMec.closeClaw();
         sleep(500);
 
@@ -146,17 +150,34 @@ public class Specimen_RR extends LinearOpMode {
         sleep(500);
         Actions.runBlocking(hang1.build());
         specMec.setPosition("Score", "Score");
-        sleep(500);
+        sleep(250);
         specMec.openClaw();
-        sleep(500);
-
+        //sleep(500);
 
 
         Actions.runBlocking(block2.build());
         specMec.setPosition("Intake", "Intake");
+        sleep(500);
         Actions.runBlocking(back2.build());
+        sleep(500);
+        Actions.runBlocking(grab2.build());
+        //sleep(500);
+        specMec.closeClaw();
+        sleep(500);
 
+        specMec.setPosition("Idle", "Score");
+        sleep(500);
+        Actions.runBlocking(hang2.build());
+        specMec.setPosition("Score", "Score");
+        sleep(250);
+        specMec.openClaw();
+        //sleep(500);
+        Actions.runBlocking(backout.build());
+        //sleep(500);
+        pivot.setPos("Down");
+        specMec.setPosition("Intake", "Intake");
         sleep(2000);
+
 
         /*hang(hang0.build(), pivot, extension, wrist, claw, specMec);
 

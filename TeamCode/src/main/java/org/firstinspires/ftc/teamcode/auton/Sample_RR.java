@@ -25,7 +25,7 @@ import java.util.HashMap;
 public class Sample_RR extends LinearOpMode {
 
     public static int tickChange = 100, pos = 150;
-    public static double basketX = 60, basketY = 60;
+    public static double basketX = 60, basketY = 60, intakeY= 41, intake3X = 66, intake3Y = 40, basket0X = 63, basket0Y = 60;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -45,7 +45,7 @@ public class Sample_RR extends LinearOpMode {
 
         TrajectoryActionBuilder bucket0 = drive.actionBuilder(startPos)
                 .setTangent(3*Math.PI/2)
-                .splineToLinearHeading(new Pose2d(basketX,basketY, 5*Math.PI/4), 0);
+                .splineToLinearHeading(new Pose2d(basket0X,basket0Y, 5*Math.PI/4), 0);
 
         TrajectoryActionBuilder wait1 = drive.actionBuilder(startPos)
                 .waitSeconds(1);
@@ -53,7 +53,7 @@ public class Sample_RR extends LinearOpMode {
 
         TrajectoryActionBuilder block1 = bucket0.endTrajectory().fresh()
                 .setTangent(5*Math.PI/4)
-                .splineToLinearHeading(new Pose2d(53, 39, 3*Math.PI/2), 3*Math.PI/2);
+                .splineToLinearHeading(new Pose2d(53, intakeY, 3*Math.PI/2), 3*Math.PI/2);
 
         TrajectoryActionBuilder bucket1 = block1.endTrajectory().fresh()
                 .setTangent(Math.PI/2)
@@ -62,7 +62,7 @@ public class Sample_RR extends LinearOpMode {
 
         TrajectoryActionBuilder block2 = bucket1.endTrajectory().fresh()
                 .setTangent(3*Math.PI/2)
-                .splineToLinearHeading(new Pose2d(63, 39, 3*Math.PI/2), 3*Math.PI/2);
+                .splineToLinearHeading(new Pose2d(63, intakeY, 3*Math.PI/2), 3*Math.PI/2);
 
         TrajectoryActionBuilder bucket2 = block2.endTrajectory().fresh()
                 .setTangent(Math.PI/2)
@@ -70,7 +70,7 @@ public class Sample_RR extends LinearOpMode {
         // TODO: Add third block
         TrajectoryActionBuilder block3 = bucket2.endTrajectory().fresh()
                 .setTangent(3*Math.PI/2)
-                .splineToLinearHeading(new Pose2d(66, 39, 5*Math.PI/3), 5*Math.PI/3);
+                .splineToLinearHeading(new Pose2d(intake3X, intake3Y, 5*Math.PI/3), 5*Math.PI/3);
 
         TrajectoryActionBuilder bucket3 = block3.endTrajectory().fresh()
                 .setTangent(2*Math.PI/3)

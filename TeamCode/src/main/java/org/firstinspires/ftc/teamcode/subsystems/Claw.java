@@ -11,7 +11,7 @@ public class Claw {
 
     private Servo claw;
     private boolean ispressed = false;
-    public static double closed = 0.58, open = 0.26;
+    public static double closed = 0.56, open = 0.26;
 
     public Claw(HardwareMap hardwareMap, HashMap<String, String> config) {
         claw = hardwareMap.servo.get(config.get("claw"));

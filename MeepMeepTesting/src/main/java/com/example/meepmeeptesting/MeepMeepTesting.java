@@ -16,40 +16,39 @@ public class MeepMeepTesting {
                 .setDimensions(16, 34)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(0, 62, 3*Math.PI/2))
-                .strafeTo(new Vector2d(0, 32))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(0, 58, 0))
+                .strafeToLinearHeading(new Vector2d(0, 26), 3*Math.PI/2)
 
                 .setTangent(Math.PI/2)
                 .splineToConstantHeading(new Vector2d(0, 40), Math.PI/2)
                 .splineToConstantHeading(new Vector2d(-38, 40), 3*Math.PI/2)
                 .setTangent(3 * Math.PI/2)
                 .splineToConstantHeading(new Vector2d(-38, 12), 3*Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-50, 12), Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-50, 56), Math.PI/2)
-                .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-50, 12), 3*Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-60, 12), Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-60, 56), Math.PI/2)
-                .strafeTo(new Vector2d(-60, 48))
+                .splineToConstantHeading(new Vector2d(-48, 12), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-48, 56), Math.PI/2)
+                .strafeTo(new Vector2d(-50, 60-16))
 
-                .strafeTo(new Vector2d(-60, 57))
+                .strafeTo(new Vector2d(-50, 57))
 
-                .strafeTo(new Vector2d(-60, 60))
+                .strafeTo(new Vector2d(-50, 60))
 
                 .setTangent(0)
                 .splineToConstantHeading(new Vector2d(-2, 26), 3*Math.PI/2)
                 //.splineToConstantHeading(new Vector2d(-2, 60-10), 3*Math.PI/2)
-
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-2, 40), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-2, 30), Math.PI/2)
                 .setTangent(Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-60, 60-6), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-50, 54), Math.PI)
 
-                .strafeTo(new Vector2d(-60, 60))
+                .strafeTo(new Vector2d(-50, 57))
 
+                .strafeTo(new Vector2d(-50, 60))
 
+                .setTangent(0)
+                .splineToConstantHeading(new Vector2d(-4, 26), 3*Math.PI/2)
 
-
+                        .setTangent(Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-48, 60), Math.PI)
 
 
                 .build());
