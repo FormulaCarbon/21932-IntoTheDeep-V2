@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 @Autonomous(name = "Spec Cycle (4)", group = "Sensor")
 public class Specimen_RR_4 extends LinearOpMode {
 
-    public static double intakeX= -50, intakeY = 60, hangY = 26, startX = -8, startY = 64, t0 = 1.5, t1 = 1.6, pullOutTime0 = 3, inTime0 = 2, hangTime = 2, openTime = 2.1, idleTime = 1, pullOutTime = 2, inTime = 1, b1X = -46, b2X = -56, wallX = -60 ;
+    public static double intakeX= -38, intakeY = 59, intakeX2 = -40, intakeY2 = 57, hangY = 26, startX = -8, startY = 64, t0 = 1.5, t1 = 1.6, pullOutTime0 = 3, inTime0 = 1, hangTime = 2, openTime = 2.1, idleTime = 1, pullOutTime = 0.7, inTime = 2.1, b1X = -46, b2X = -56, wallX = -60 ;
     @Override
     public void runOpMode() throws InterruptedException {
         // Hardware Map HashMap
@@ -157,7 +157,7 @@ public class Specimen_RR_4 extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(-2, 30), Math.PI/2)
                 .afterTime(inTime, specMec.closeClaw())
                 .setTangent(Math.PI/2)
-                .splineToConstantHeading(new Vector2d(intakeX, intakeY), Math.PI)
+                .splineToConstantHeading(new Vector2d(intakeX2, intakeY2), Math.PI)
 
                 .afterTime(idleTime, specMec.setPos("Idle", "Score"))
                 .afterTime(hangTime, specMec.setPos("Score", "Score"))
@@ -170,7 +170,7 @@ public class Specimen_RR_4 extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(-4, 30), Math.PI/2)
                 .afterTime(inTime, specMec.closeClaw())
                 .setTangent(Math.PI/2)
-                .splineToConstantHeading(new Vector2d(intakeX, intakeY), Math.PI)
+                .splineToConstantHeading(new Vector2d(intakeX2, intakeY2), Math.PI)
 
                 .afterTime(idleTime, specMec.setPos("Idle", "Score"))
                 .afterTime(hangTime, specMec.setPos("Score", "Score"))
@@ -179,7 +179,7 @@ public class Specimen_RR_4 extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(-6, hangY), 3*Math.PI/2)
 
                 .afterTime(pullOutTime, specMec.setPos("Intake", "Intake"))
-                .strafeTo(new Vector2d(-8, 40));
+                .strafeTo(new Vector2d(-6, 40));
 
 
 
@@ -225,6 +225,15 @@ public class Specimen_RR_4 extends LinearOpMode {
         );*/
 
         Actions.runBlocking(wholeThing.build());
+
+        Actions.runBlocking(
+                new SequentialAction(
+                        pivot.setPos("Down"),
+                        specMec.setPos("Intake", "Intake"),
+                        new SleepAction(5)
+                )
+
+        );
 
 
 

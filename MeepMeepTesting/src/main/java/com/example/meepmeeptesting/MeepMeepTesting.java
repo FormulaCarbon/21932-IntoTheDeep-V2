@@ -26,17 +26,12 @@ public class MeepMeepTesting {
                 .splineToConstantHeading(new Vector2d(-38, 16), 3*Math.PI/2)
                 .splineToConstantHeading(new Vector2d(-48, 16), Math.PI/2)
                 .splineToConstantHeading(new Vector2d(-48, 52), Math.PI/2)
-                //.waitSeconds(0.1)
+                .waitSeconds(0.1)
                 .splineToConstantHeading(new Vector2d(-48, 16), 3*Math.PI/2)
                 .splineToConstantHeading(new Vector2d(-58, 16), Math.PI/2)
                 .splineToConstantHeading(new Vector2d(-58, 52), Math.PI/2)
 
-                //.waitSeconds(0.1)
-                .splineToConstantHeading(new Vector2d(-58, 16), 3*Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-64, 16), Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-64, 52), Math.PI/2)
-
-                .splineToConstantHeading(new Vector2d(-50, 60), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-38, 60), Math.PI/2)
 
                 // block 2
 
