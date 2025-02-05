@@ -42,7 +42,7 @@ public class MeepMeepTesting {
                 .setTangent(3 * Math.PI/2)
                 .splineToConstantHeading(new Vector2d(-2, 30), Math.PI/2)
                 .setTangent(Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-50, 60), Math.PI)
+                .splineToConstantHeading(new Vector2d(-50, 60), Math.PI/2)
 
                 .setTangent(0)
                 .splineToConstantHeading(new Vector2d(-4, 26), 3*Math.PI/2)
@@ -63,11 +63,11 @@ public class MeepMeepTesting {
                 .splineToConstantHeading(new Vector2d(-50, 60), Math.PI)
 
                 .setTangent(0)
-                .splineToConstantHeading(new Vector2d(-8, 26), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-8, 26), Math.PI/2)
 
                 //park
-
-                .strafeTo(new Vector2d(-8, 40))
+                        .setTangent(Math.PI/2)
+                .splineToConstantHeading(new Vector2d(-37, 60), Math.PI)
 
 
 
