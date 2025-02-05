@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 @Autonomous(name = "Spec Cycle (4)", group = "Sensor")
 public class Specimen_RR_4 extends LinearOpMode {
 
-    public static double intakeX= -38, intakeY = 59, intakeX2 = -40, intakeY2 = 57, hangY = 26, startX = -8, startY = 64, t0 = 1.5, t1 = 1.6, pullOutTime0 = 3, inTime0 = 1, hangTime = 2, openTime = 2.1, idleTime = 1, pullOutTime = 0.7, inTime = 2.1, b1X = -46, b2X = -56, wallX = -60 ;
+    public static double intakeX= -37, intakeY = 59, intakeX2 = -40, intakeY2 = 57, hangY = 26, startX = -8, startY = 64, t0 = 1.6, t1 = 1.7, pullOutTime0 = 3, inTime0 = 1, hangTime = 2, openTime = 2.1, idleTime = 1, pullOutTime = 0.7, inTime = 2.1, b1X = -46, b2X = -56, wallX = -60, hangX = 2 ;
     @Override
     public void runOpMode() throws InterruptedException {
         // Hardware Map HashMap
@@ -128,7 +128,7 @@ public class Specimen_RR_4 extends LinearOpMode {
         TrajectoryActionBuilder wholeThing = drive.actionBuilder(startPos)
                 .afterTime(t0, specMec.setPos("Score", "Score"))
                 .afterTime(t1, specMec.openClaw())
-                .strafeToLinearHeading(new Vector2d(0, hangY), 3*Math.PI/2)
+                .strafeToLinearHeading(new Vector2d(hangX, hangY), 3*Math.PI/2)
 
                 .afterTime(pullOutTime0, specMec.setPos("Intake", "Intake"))
                 .setTangent(Math.PI/2)
@@ -150,11 +150,11 @@ public class Specimen_RR_4 extends LinearOpMode {
                 .afterTime(hangTime, specMec.setPos("Score", "Score"))
                 .afterTime(openTime, specMec.openClaw())
                 .setTangent(0)
-                .splineToConstantHeading(new Vector2d(-2, hangY), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(hangX-2, hangY), 3*Math.PI/2)
 
                 .afterTime(pullOutTime, specMec.setPos("Intake", "Intake"))
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-2, 30), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(hangX-2, 30), Math.PI/2)
                 .afterTime(inTime, specMec.closeClaw())
                 .setTangent(Math.PI/2)
                 .splineToConstantHeading(new Vector2d(intakeX2, intakeY2), Math.PI)
@@ -163,11 +163,11 @@ public class Specimen_RR_4 extends LinearOpMode {
                 .afterTime(hangTime, specMec.setPos("Score", "Score"))
                 .afterTime(openTime, specMec.openClaw())
                 .setTangent(0)
-                .splineToConstantHeading(new Vector2d(-4, hangY), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(hangX-4, hangY), 3*Math.PI/2)
 
                 .afterTime(pullOutTime, specMec.setPos("Intake", "Intake"))
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-4, 30), Math.PI/2)
+                .splineToConstantHeading(new Vector2d(hangX-4, 30), Math.PI/2)
                 .afterTime(inTime, specMec.closeClaw())
                 .setTangent(Math.PI/2)
                 .splineToConstantHeading(new Vector2d(intakeX2, intakeY2), Math.PI)
@@ -176,10 +176,10 @@ public class Specimen_RR_4 extends LinearOpMode {
                 .afterTime(hangTime, specMec.setPos("Score", "Score"))
                 .afterTime(openTime, specMec.openClaw())
                 .setTangent(0)
-                .splineToConstantHeading(new Vector2d(-6, hangY), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(hangX-6, hangY), 3*Math.PI/2)
 
                 .afterTime(pullOutTime, specMec.setPos("Intake", "Intake"))
-                .strafeTo(new Vector2d(-6, 40));
+                .strafeTo(new Vector2d(hangX-6, 40));
 
 
 
