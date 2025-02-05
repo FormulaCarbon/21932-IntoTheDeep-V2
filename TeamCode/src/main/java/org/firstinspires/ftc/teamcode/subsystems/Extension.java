@@ -37,10 +37,10 @@ public class Extension {
 
         pidController.setTolerance(PIDTol);
 
-        positions.put("Intake", 1200);
+        positions.put("Intake", 975);
         positions.put("Idle",   0);
-        positions.put("Basket", 2475);
-        positions.put("Hang", 2475);
+        positions.put("Basket", 1975);
+        positions.put("Hang", 1975);
         positions.put("Retract", 1400);
     }
 
