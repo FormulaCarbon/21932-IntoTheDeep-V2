@@ -196,8 +196,11 @@ public class Specimen_RR_4 extends LinearOpMode {
                         pivot.setPos("Start"),
                         specMec.closeClaw(),
                         specMec.setPos("Start", "Start")
+
                 )
         );
+        wrist.setPos("Start");
+        wrist.update();
         telemetry.addLine("initpos");
 
         update.start();

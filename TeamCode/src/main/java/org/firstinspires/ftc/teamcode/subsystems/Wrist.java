@@ -16,7 +16,7 @@ public class Wrist {
     public static HashMap<String, Double> bicepPositions = new HashMap<String, Double>();
     public static HashMap<String, Double> forearmPositions = new HashMap<String, Double>();
 
-    public static double intakepos = 0, bBasket = 0.86, fBasket = 0.92;
+    public static double intakepos = 0, bBasket = 0.86, fBasket = 0.92, bIdle = 0.88, fIdle = 0.63;
 
     public static double[] rotationPositions = new double[4];
 
@@ -28,14 +28,14 @@ public class Wrist {
         bicepPositions.put("Intake",      0.8761);
         bicepPositions.put("Basket",      bBasket);
         bicepPositions.put("Idle",        0.8);
-        bicepPositions.put("Start",       0.75);
-        bicepPositions.put("Auton Idle",  0.8);
+        bicepPositions.put("Start",       0.71);
+        bicepPositions.put("Auton Idle",  bIdle);
 
         forearmPositions.put("Intake",      0.0);
         forearmPositions.put("Basket",      fBasket);
         forearmPositions.put("Idle",        0.0);
         forearmPositions.put("Start",       1.0);
-        forearmPositions.put("Auton Idle",  0.6);
+        forearmPositions.put("Auton Idle",  fIdle);
 
         rotationPositions[0] = 0.39;
         rotationPositions[1] = 0.66;
