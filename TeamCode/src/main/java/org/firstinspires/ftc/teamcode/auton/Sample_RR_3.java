@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
@@ -22,6 +23,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 import java.util.HashMap;
 @Config
 @Autonomous(name = "Sample Cycle (3)", group = "Sensor")
+@Disabled
 public class Sample_RR_3 extends LinearOpMode {
 
     public static int tickChange = 100, pos = 150;

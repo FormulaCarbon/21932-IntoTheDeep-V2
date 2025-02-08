@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.PinpointDrive;
@@ -19,6 +20,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 
 @Config
 @Autonomous(name = "Spec Cycle (3S)", group = "Sensor")
+@Disabled
 public class Specimen_RR_3_S extends LinearOpMode {
 
     public static double intakeX= -50, intakeY = 60, hangY = 26, startX = -8, startY = 64;

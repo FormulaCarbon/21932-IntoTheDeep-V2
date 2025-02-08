@@ -13,7 +13,7 @@ public class SpecMec {
 
     private Servo swing1, swing2, turn, claw;
 
-    public static double scorePos = 0.1, intakePos = 0.8, turn0 = 0.68, turn1 = 0.02, idlePos = 0.15, close = 0.85, open = 0.45;
+    public static double scorePos = 0.09, intakePos = 0.79, turn0 = 0.68, turn1 = 0.02, idlePos = 0.14, close = 0.85, open = 0.45, idle = 0.7;
     public static int ledBrightness = 100;
 
     public static HashMap<String, Double> swingPos = new HashMap<String, Double>();
@@ -70,6 +70,10 @@ public class SpecMec {
 
     public void openClaw() {
         clawPos = open;
+    }
+
+    public void idleClaw() {
+        clawPos = idle;
     }
 
     public void checkSensor() {
