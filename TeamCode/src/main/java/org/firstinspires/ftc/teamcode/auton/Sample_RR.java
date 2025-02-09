@@ -25,7 +25,7 @@ import java.util.HashMap;
 public class Sample_RR extends LinearOpMode {
 
     public static int tickChange = 100, pos = 150;
-    public static double basketX = 60, basketY = 60, intakeY= 41, intake3X = 64, intake3Y = 39, basket0X = 63, basket0Y = 60, intakeX = 53, intake2X= 62;
+    public static double basketX = 58, basketY = 58, intakeY= 41, intake3X = 64.5, intake3Y = 40, basket0X = 58, basket0Y = 58, intakeX = 53, intake2X= 62, intake2Y = 42;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -62,12 +62,12 @@ public class Sample_RR extends LinearOpMode {
 
         TrajectoryActionBuilder block2 = bucket1.endTrajectory().fresh()
                 .setTangent(3*Math.PI/2)
-                .splineToLinearHeading(new Pose2d(intake2X, intakeY, 3*Math.PI/2), 3*Math.PI/2);
+                .splineToLinearHeading(new Pose2d(intake2X, intake2Y, 3*Math.PI/2), 3*Math.PI/2);
 
         TrajectoryActionBuilder bucket2 = block2.endTrajectory().fresh()
                 .setTangent(Math.PI/2)
                 .splineToLinearHeading(new Pose2d(basketX,basketY, 5*Math.PI/4), Math.PI/2);
-        // TODO: Add third block
+
         TrajectoryActionBuilder block3 = bucket2.endTrajectory().fresh()
                 .setTangent(3*Math.PI/2)
                 .splineToLinearHeading(new Pose2d(intake3X, intake3Y, 5*Math.PI/3), 5*Math.PI/3);
@@ -121,7 +121,7 @@ public class Sample_RR extends LinearOpMode {
         pivot.setkP("Normal");
         pivot.setPos("Down");
 
-        wrist.setRotationPos(1);
+        wrist.setRotationPos(4);
 
         wrist.setPos("Intake");
         sleep(1500);
@@ -154,7 +154,7 @@ public class Sample_RR extends LinearOpMode {
 
         pivot.setPos("Down");
 
-        sleep(2000);
+        sleep(5000);
 
     }
     public void sleep(int t) {

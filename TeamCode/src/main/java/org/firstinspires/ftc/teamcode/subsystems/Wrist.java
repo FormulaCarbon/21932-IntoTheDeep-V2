@@ -16,9 +16,9 @@ public class Wrist {
     public static HashMap<String, Double> bicepPositions = new HashMap<String, Double>();
     public static HashMap<String, Double> forearmPositions = new HashMap<String, Double>();
 
-    public static double intakepos = 0, bBasket = 0.86, fBasket = 0.92, bIdle = 0.88, fIdle = 0.63;
+    public static double autoPos = 0.63, intakepos = 0, bBasket = 0.86, fBasket = 0.92, bIdle = 0.88, fIdle = 0.63;
 
-    public static double[] rotationPositions = new double[4];
+    public static double[] rotationPositions = new double[5];
 
     public Wrist(HardwareMap hwMap, HashMap<String, String> config) {
         bicep = hwMap.servo.get(config.get("bicep"));
@@ -41,6 +41,8 @@ public class Wrist {
         rotationPositions[1] = 0.66;
         rotationPositions[2] = 0.94;
         rotationPositions[3] = 0.12;
+        rotationPositions[4] = autoPos;
+
 
     }
 

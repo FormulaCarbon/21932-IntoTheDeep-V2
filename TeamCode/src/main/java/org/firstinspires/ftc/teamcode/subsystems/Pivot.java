@@ -22,7 +22,7 @@ public class Pivot {
     public static double power = 0, lastPower = power;
 
     private int pos;
-    private int curLeft = 0, lAngle = curLeft;
+    private int curLeft = 0, lAngle = curLeft, startPos = 1500;
     private int lta = 0;
 
 
@@ -64,7 +64,7 @@ public class Pivot {
         positions.put("Down", 0);
         positions.put("Basket", basketPos);
         positions.put("Idle", basketPos);
-        positions.put("Start", 1370);
+        positions.put("Start", startPos);
         positions.put("Hang", hangPos);
         positions.put("Lift", 2100);
 

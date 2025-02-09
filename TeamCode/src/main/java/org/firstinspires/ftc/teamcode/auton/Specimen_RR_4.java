@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.subsystems.Wrist;
 @Autonomous(name = "Spec Cycle (4)", group = "Sensor")
 public class Specimen_RR_4 extends LinearOpMode {
 
-    public static double intakeX= -46, intakeY = 59, intakeX2 = -49, intakeY2 = 59, hangY = 26, startX = -8, startY = 64, t0 = 1.6, t1 = 1.7, pullOutTime0 = 3, inTime0 = 1, hangTime = 2.4, openTime = 2.5, idleTime = 1, pullOutTime = 0.7, inTime = 2.3, b1X = -46, b2X = -54, wallX = -60, hangX = 2, hangTime2 = 2.4, openTime2 = 2.5, hangY4 = 22, pivotDownTime = 1, hangTime3 = 2.6, openTime3 = 2.7;
+    public static double intakeX= -49, intakeY = 58, intakeX2 = -49, intakeY2 = 58, hangY = 26, startX = -8, startY = 64, t0 = 1.6, t1 = 1.7, pullOutTime0 = 3, inTime0 = 1, hangTime = 2.4, openTime = 2.5, idleTime = 0.5, pullOutTime = 0.7, inTime = 2.4, b1X = -46, b2X = -54, wallX = -60, hangX = 2, hangTime2 = 2.4, openTime2 = 2.5, hangY4 = 22, pivotDownTime = 0.7, hangTime3 = 2.4, openTime3 = 2.5, pushX = -36, pullOutTime3 = 0.5;
     @Override
     public void runOpMode() throws InterruptedException {
         // Hardware Map HashMap
@@ -133,9 +133,9 @@ public class Specimen_RR_4 extends LinearOpMode {
                 .afterTime(pullOutTime0, specMec.setPos("Intake", "Intake"))
                 .setTangent(Math.PI/2)
                 .splineToConstantHeading(new Vector2d(0, 40), Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-38, 40), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(pushX, 40), 3*Math.PI/2)
                 .setTangent(3 * Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-38, 16), 3*Math.PI/2)
+                .splineToConstantHeading(new Vector2d(pushX, 16), 3*Math.PI/2)
                 .splineToConstantHeading(new Vector2d(b1X, 16), Math.PI/2)
                 .splineToConstantHeading(new Vector2d(b1X, 52), Math.PI/2)
                 .waitSeconds(0.1)
@@ -178,11 +178,11 @@ public class Specimen_RR_4 extends LinearOpMode {
                 .setTangent(0)
                 .splineToConstantHeading(new Vector2d(hangX-6, hangY4), 3*Math.PI/2)
 
-                .afterTime(pullOutTime- 0.2, specMec.closeClaw())
-                .afterTime(pullOutTime, specMec.setPos("Intake", "Intake"))
+                .afterTime(pullOutTime, specMec.closeClaw())
+                .afterTime(pullOutTime3, specMec.setPos("Intake", "Intake"))
                 .afterTime(pivotDownTime, pivot.setPos("Down"))
                 .setTangent(Math.PI/2)
-                .splineToConstantHeading(new Vector2d(-37, 60), Math.PI/2);
+                .splineToConstantHeading(new Vector2d(-37, 54), Math.PI/2);
 
 
 
@@ -201,7 +201,7 @@ public class Specimen_RR_4 extends LinearOpMode {
                 )
         );
         wrist.setPos("Start");
-        wrist.setRotationPos(1);
+        wrist.setRotationPos(0);
         wrist.update();
         telemetry.addLine("initpos");
 
